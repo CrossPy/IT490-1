@@ -1,0 +1,11 @@
+#####  IT490 Project Todo-List  #####
+
+- RabbitMQ Between machines. 
+- Finish wireframe and come to agreement on it.
+- Choose frameworks/languages
+	- Database (MySQL?)
+	- Front end UI (AngularJS?)
+	- Back-End Webserver (Node.Js, Python Django, PHP)
+	- API Server (The data fetcher) (Python? There's a nice wrapper for the MySportsFeed API written in Python)
+
+
