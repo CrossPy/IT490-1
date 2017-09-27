@@ -11,7 +11,7 @@
 <html lang = "en">
    
    <head>
-      <title>Tutorialspoint.com</title>
+      <title>bookiesNJIT.com</title>
       <link href = "css/bootstrap.min.css" rel = "stylesheet">
       
       <style>
@@ -75,7 +75,7 @@
 	
    <body>
       
-      <h2>Enter Username and Password</h2> 
+      <h2>Welcome to the Bookies of NJIT!</h2> 
       <div class = "container form-signin">
          
          <?php
