@@ -1,7 +1,7 @@
 import pika
 
 if __name__ == '__main__':
-	conn = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+	conn = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.100'))
 	ch = conn.channel()
 	while (1):
 		msg = raw_input(">> ")
