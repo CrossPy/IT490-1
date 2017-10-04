@@ -1,5 +1,5 @@
 <?php
-	
+	echo $_POST['query'];	
 	$mqServer = '192.168.1.105';
 	$mQQ = 'sqlQ';
 	$oneTimeKey = uniqid();
