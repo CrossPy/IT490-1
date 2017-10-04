@@ -1,14 +1,16 @@
 <?php
 	
 	$mqServer = '192.168.1.105';
-	$mQQ = 'sqlQ'
-	$oneTimeKey = uniq()
+	$mQQ = 'sqlQ';
+	$oneTimeKey = uniqid();
 	require_once __DIR__ . '/vendor/autoload.php';
 	use PhpAmqpLib\Connection\AMQPStreamConnection;
 	use PhpAmqLib\Message\AMQPMessage;
 	$conn = new AMQPStreamConnection($mqServer, 5672, 'guest', 'guest');
 	$channel = $conn->channel();
+	$echo $_POST['query'];
 	$msg = new AMQPMessage($oneTimeKey . ' ' . $_POST['query']);
+	
 	$channel->basic_publish(msg, '', $mQQ);
 	
 	$channel->queue_declare($oneTimeKey,false,false,false,false);
