@@ -118,13 +118,13 @@ class rabbitMQServer
       			$params['vhost'] = $this->VHOST;
 			print_r($params);
 			$conn = new AMQPConnection($params['host'], $params['port'],$params['login'], $params['password'], $params['vhost']);
-			$conn->connect();
+			//$conn->connect();
 
 			$channel = new AMQPChannel($conn);
 
 			$exchange = new AMQPExchange($channel);
-      $exchange->setName($this->exchange);
-      $exchange->setType($this->exchange_type);
+		      $exchange->setName($this->exchange);
+		      $exchange->setType($this->exchange_type);
 
 			$this->conn_queue = new AMQPQueue($channel);
 			$this->conn_queue->setName($this->queue);
