@@ -1,6 +1,16 @@
 <?php
 
 require_once('get_host_info.inc');
+//use PhpAmqpLib\Message\AMQPConnection;
+
+//foreach(glob("PhpAmqpLib/*.php") as $filename){
+//	include $filename;
+//}
+
+//use PhpAmqpLib;
+
+require_once __DIR__.'/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPConnection;
 
 class rabbitMQServer
 {
@@ -100,12 +110,13 @@ class rabbitMQServer
 		try
 		{
 			$this->callback = $callback;
-      $params = array();
-      $params['host'] = $this->BROKER_HOST;
-      $params['port'] = $this->BROKER_PORT;
-      $params['login'] = $this->USER;
-      $params['password'] = $this->PASSWORD;
-      $params['vhost'] = $this->VHOST;
+      			$params = array();
+      			$params['host'] = $this->BROKER_HOST;
+      			$params['port'] = $this->BROKER_PORT;
+      			$params['login'] = $this->USER;
+      			$params['password'] = $this->PASSWORD;
+      			$params['vhost'] = $this->VHOST;
+			print_r($params);
 			$conn = new AMQPConnection($params);
 			$conn->connect();
 
