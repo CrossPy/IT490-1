@@ -68,18 +68,18 @@ class rabbitMQServer
 					$response = call_user_func($this->callback,$payload);
 				}
 
-      $params = array();
-      $params['host'] = $this->BROKER_HOST;
-      $params['port'] = $this->BROKER_PORT;
-      $params['login'] = $this->USER;
-      $params['password'] = $this->PASSWORD;
-      $params['vhost'] = $this->VHOST;
-			$conn = new AMQPConnection($params);
+		      $params = array();
+		      $params['host'] = $this->BROKER_HOST;
+		      $params['port'] = $this->BROKER_PORT;
+		      $params['login'] = $this->USER;
+		      $params['password'] = $this->PASSWORD;
+		      $params['vhost'] = $this->VHOST;
+			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
 			$conn->connect();
 			$channel = new AMQPChannel($conn);
 			$exchange = new AMQPExchange($channel);
-      $exchange->setName($this->exchange);
-      $exchange->setType($this->exchange_type);
+		      $exchange->setName($this->exchange);
+		      $exchange->setType($this->exchange_type);
 
 			$conn_queue = new AMQPQueue($channel);
 			$conn_queue->setName($msg->getReplyTo());
@@ -117,7 +117,7 @@ class rabbitMQServer
       			$params['password'] = $this->PASSWORD;
       			$params['vhost'] = $this->VHOST;
 			print_r($params);
-			$conn = new AMQPConnection($params);
+			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
 			$conn->connect();
 
 			$channel = new AMQPChannel($conn);
@@ -212,7 +212,7 @@ class rabbitMQClient
       $params['password'] = $this->PASSWORD;
       $params['vhost'] = $this->VHOST;
 
-			$conn = new AMQPConnection($params);
+			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
 			$conn->connect();
 
 			$channel = new AMQPChannel($conn);
@@ -262,7 +262,7 @@ class rabbitMQClient
       $params['login'] = $this->USER;
       $params['password'] = $this->PASSWORD;
       $params['vhost'] = $this->VHOST;
-			$conn = new AMQPConnection($params);
+			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
 			$conn->connect();
 			$channel = new AMQPChannel($conn);
 			$exchange = new AMQPExchange($channel);
