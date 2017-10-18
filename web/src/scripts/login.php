@@ -7,7 +7,7 @@
 
 	$request = array();
 	$request['type'] = "login";
-	$request['username'] = $_POST["username"];
+	$request['username'] = $_POST["email"];
 	$request['password'] = $_POST["password"];
 	$response = $client->send_request($request);
 
@@ -22,12 +22,12 @@
 
 	<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>NJIT Bookies</b></a></li>
-			<li><a href="register.html">Register</a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="../index.php"><b>NJIT Bookies</b></a></li>
+			<li><a href="../register.php">Register</a></li>
 			<li style="float:right" class="dropdown" >
 			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
 			    <div class="dropdown-content">
-			      <a href="login.html">Login</a>
+			      <a href="../login.php">Login</a>
 			    </div>
 			  </li>
 		</ul>
@@ -44,19 +44,19 @@
 				{
 					session_start();
 					$_SESSION["username"] = $username;
-					header("Location: profile.php");
+					header("Location: ../profile.php");
 				}
 
 				if ($response == "1")
 				{
 					echo "<b><font color='red'><center>Login failed. You have entered the wrong password.</center></b><br><br>";
-					echo "<center><a href=login.html>Go Back</a></center>";
+					echo "<center><a href=login.php>Go Back</a></center>";
 				}
 
 				if ($response == "2")
 				{
 					echo "<center><b><font color='red'>Login failed. Could not find username.</center></b><br><br>";
-					echo "<center><a href=login.html>Go Back</a></center>";	
+					echo "<center><a href=login.php>Go Back</a></center>";	
 				}
 			?>
 		</div>

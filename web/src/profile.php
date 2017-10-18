@@ -13,7 +13,7 @@
 
 <body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Home</b></a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>Home</b></a></li>
 			
 		</ul>
 

@@ -21,8 +21,8 @@
 
 	<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Home</b></a></li>
-			<li><a href="register.html">Register</a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>Home</b></a></li>
+			<li><a href="register.php">Register</a></li>
 			<li><a href="profile.php">Profile</a></li>
 			<li style="float:right" class="dropdown">
 				
@@ -32,7 +32,7 @@
 						echo '<html>
 							<a href="#" class="dropbtn">Logged in as: $username</a>
 							<div class="dropdown-content">	
-								<a href="logout.php">Logout</a>
+								<a href="./scripts/logout.php">Logout</a>
 			    				</div>
 						</html>';
 					}
@@ -42,7 +42,7 @@
 						<html>
 							<a href="#" class="dropbtn">Logged in as: Anonymous</a>
 							<div class="dropdown-content">	
-								<a href="login.html">Login</a>
+								<a href="login.php">Login</a>
 			    				</div>
 						</html>';
 					}

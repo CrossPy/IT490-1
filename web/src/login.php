@@ -13,12 +13,12 @@
 
   	<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Home</b></a></li>
-			<li><a href="register.html">Register</a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>Home</b></a></li>
+			<li><a href="register.php">Register</a></li>
 			<li style="float:right" class="dropdown" >
 			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
 			    <div class="dropdown-content">
-			      <a href="login.html">Login</a>
+			      <a href="login.php">Login</a>
 			    </div>
 			  </li>
 		</ul>
@@ -27,9 +27,9 @@
 
 		<div>
 			<h1>Login to place your bet!</h1>
-			<form method="post" action="login.php">	
-				<label for="username">Username</label>
-				<input type="text" id="username" name="username"required/>
+			<form method="post" action="./scripts/login.php">	
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email"required/>
 
 				<label for="password">Password</label>
 				<input type="password" id="password" name="password" required>
