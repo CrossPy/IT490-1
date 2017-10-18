@@ -1,25 +1,27 @@
 <?php
-	require_once('path.inc');
-	require_once('get_host_info.inc');
-	require_once('rabbitMQLib.inc');
-
-	session_start();
-
-	$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
-
-	$request = array();
-	$request['type'] = "register";
-	$request['password'] = $_POST["password"];
-	$request['email'] = $_POST["email"];
-	$request['firstName'] = $_POST["firstName"];
-	$request['lastName'] = $_POST["lastName"];
 	try{
-	$response = $client->send_request($request);
-	
+		require_once('path.inc');
+		require_once('get_host_info.inc');
+		require_once('rabbitMQLib.inc');
+		
+		session_start();
+
+		$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
+
+		$request = array();
+		$request['type'] = "register";
+		$request['password'] = $_POST["password"];
+		$request['email'] = $_POST["email"];
+		$request['firstName'] = $_POST["firstName"];
+		$request['lastName'] = $_POST["lastName"];
+			
+		$response = $client->send_request($request);
+		
+		
+		$username = $request['username'];
 	}catch(Exception $e){
 		echo $e->getMessage();
 	}
-	$username = $request['username'];
 ?>
 
 <html>
