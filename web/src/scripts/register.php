@@ -17,7 +17,7 @@
 	$response = $client->send_request($request);
 	
 	}catch(Exception $e){
-		echo $e;
+		echo $e->getMessage();
 	}
 	$username = $request['username'];
 ?>
