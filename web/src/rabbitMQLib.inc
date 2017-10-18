@@ -213,7 +213,7 @@ class rabbitMQClient
       $params['password'] = $this->PASSWORD;
       $params['vhost'] = $this->VHOST;
 
-			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
+			$conn = new AMQPConnection($params);
 			$conn->connect();
 
 			$channel = new AMQPChannel($conn);
@@ -263,7 +263,7 @@ class rabbitMQClient
       $params['login'] = $this->USER;
       $params['password'] = $this->PASSWORD;
       $params['vhost'] = $this->VHOST;
-			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
+			$conn = new AMQPConnection($params);
 			$conn->connect();
 			$channel = new AMQPChannel($conn);
 			$exchange = new AMQPExchange($channel);
