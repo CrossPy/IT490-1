@@ -10,8 +10,9 @@ require_once('get_host_info.inc');
 //use PhpAmqpLib;
 
 require_once __DIR__.'/vendor/autoload.php';
-use PhpAmqpLib\Connection\AMQPConnection;
-
+//use PhpAmqpLib\Connection\AMQPConnection;
+//use PhpAmqpLib\Channel\AMQPChannel;
+//use PhpAmqpLib\Message\AMQPMessage;
 class rabbitMQServer
 {
 	private $machine = "";
@@ -74,7 +75,7 @@ class rabbitMQServer
 		      $params['login'] = $this->USER;
 		      $params['password'] = $this->PASSWORD;
 		      $params['vhost'] = $this->VHOST;
-			$conn = new AMQPConnection(BROKER_HOST, BROKER_PORT, USER, PASSWORD, VHOST);
+			$conn = new AMQPConnection($params);
 			$conn->connect();
 			$channel = new AMQPChannel($conn);
 			$exchange = new AMQPExchange($channel);
@@ -117,8 +118,8 @@ class rabbitMQServer
       			$params['password'] = $this->PASSWORD;
       			$params['vhost'] = $this->VHOST;
 			print_r($params);
-			$conn = new AMQPConnection($params['host'], $params['port'],$params['login'], $params['password'], $params['vhost']);
-			//$conn->connect();
+			$conn = new AMQPConnection($params);
+			$conn->connect();
 
 			$channel = new AMQPChannel($conn);
 
