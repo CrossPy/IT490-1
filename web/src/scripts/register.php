@@ -13,9 +13,12 @@
 	$request['email'] = $_POST["email"];
 	$request['firstName'] = $_POST["firstName"];
 	$request['lastName'] = $_POST["lastName"];
-	
+	try{
 	$response = $client->send_request($request);
-
+	
+	}catch(Exception $e){
+		echo $e;
+	}
 	$username = $request['username'];
 ?>
 
