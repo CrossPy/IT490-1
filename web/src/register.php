@@ -1,31 +1,12 @@
-<?php
-	require_once('path.inc');
-	require_once('get_host_info.inc');
-	require_once('rabbitMQLib.inc');
-
-	session_start();
-
-	$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
-
-	$request = array();
-	$request['type'] = "register";
-	$request['password'] = $_POST["password"];
-	$request['email'] = $_POST["email"];
-	$request['firstName'] = $_POST["firstName"];
-	$request['lastName'] = $_POST["lastName"];
-	
-	$response = $client->send_request($request);
-
-	$username = $request['username'];
-?>
+<DOCTYPE html>
 
 <html>
 	<head>
-		<title>NJIT Bookies | Register Failed</title>
-		<link rel="stylesheet" type="text/css" href="style.css"
-	</head>
+		<title>NJIT Bookies | Register</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+  	</head>
 
-	<body>
+  	<body>
 		<ul>
 			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>NJIT Bookies</b></a></li>
 			<li><a href="register.html">Register</a></li>
@@ -38,26 +19,53 @@
 		</ul>
 
 		<br><br>
-		
-		<div>
-	
+
+    		<div>
 			<h1>Register</h1>
+			<form method="post" action="register.php">
+			<table> <tr> 
+				<td><label for="email">Email</label></td>
+				<td><input type="email" id="email" name="email" required/></td>
+</tr>
+				<tr><td><label for="password">Password</label></td>	
+				<td><input type="password" id="password" name="password" required/></td></tr>
 
-			<?php
-				if ($response == "0")
-				{
-					session_start();
-					$_SESSION["username"] = $username;
-					header("Location: profile.php");
-				}
+				<tr><td><label for="confirm_password">Confirm Password</label></td>
+				<td><input type="password" id="confirm_password" name="confirm_password" required/></td></tr>
 
-				if ($response == "1")
-				{
-					echo "<center><b><font color='red'>Account could not be created. That email address is already in use.</center></b><br><br>";
-					echo "<center><a href=register.html>Go Back</center></a>";
-				}
+				<tr><td><label for="firstname">First Name</label></td>
+			    	<td><input type="text" id="firstname" name="firstName"required/></td></tr>
 
-			?>
+				<tr><td><label for="lastname">Last Name</label></td>
+		       		<td><input type="text" id="lastname" name="lastName" required/></td></tr>
+
+				<tr><td><label for="address">Address</label></td>
+		       		<td><input type="text" id="address" name="address" required/></td></tr>
+
+				<tr><td><input type="submit" value="Submit"></td></tr>
+				</table>
+	    		</form> 
 		</div>
-	</body>
+
+		<script>
+			var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+
+			function validatePassword()
+			{
+			  	if(password.value != confirm_password.value)
+				{
+				   	confirm_password.setCustomValidity("Passwords Don't Match");
+		  		} 
+				else
+				{
+		   			confirm_password.setCustomValidity('');
+		  		}
+			}
+
+			password.onchange = validatePassword;
+			confirm_password.onkeyup = validatePassword;
+		</script>
+  	</body>
 </html>
+
+

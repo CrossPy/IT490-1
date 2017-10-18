@@ -1,54 +1,44 @@
-<?php
-	require_once('path.inc');
-	require_once('get_host_info.inc');
-	require_once('rabbitMQLib.inc');
-
-	session_start();
-	$username = $_SESSION["username"];
-
-	$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
-
-	$request = array();
-	$request['type'] = "profile";
-	$request['username'] = $username;
-	$response = $client->send_request($request);
-
-	$length = count($response);
-?>
-
+<DOCTYPE html>
 <html>
-	<head>
-		<title>Colleges.com: Profile</title>
+
+<div class="w3-container w3-cyan">
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+ 	<head>
+		<title>NJIT Bookies | Profile</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
-	<body>
+<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Colleges.com</b></a></li>
-			<li><a href="register.html">Register</a></li>
-			<li><a href="collegeList.php">College List</a></li>
-			<li><a href="MajorList.php">Major List</a></li>
-			<li style="float:right" class="dropdown" >
-			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
-			    <div class="dropdown-content">
-			      <a href="logout.php">Logout</a>
-			    </div>
-			  </li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Home</b></a></li>
+			
 		</ul>
 
 		<br><br>
 
 		<div>
-			<h1>Profile</h1>
-			<?php
-				echo "<h2><center>Welcome $username!</center></h2><br><br>";
-				for($i = 0; $i < $length; $i++)
-				{
-	    				echo $response[$i];
-	    				echo "<br>";
-				}
-			?>
-			<br><br>			
-		</div>
+
+		<h1>Welcome to your account.</h1>
+
+
+
+<body> 
+
+<?php>
+	session_start();
+?>
+
+<html>
+
+	<body>
+      		<php print $_SESSION["username"]; ?>
+	<div>
+		test
+    	</div>
+
 	</body>
+
 </html>

@@ -1,28 +1,19 @@
-<?php
-	require_once('path.inc');
-	require_once('get_host_info.inc');
-	require_once('rabbitMQLib.inc');
-
-	$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
-
-	$request = array();
-	$request['type'] = "login";
-	$request['username'] = $_POST["username"];
-	$request['password'] = $_POST["password"];
-	$response = $client->send_request($request);
-
-	$username = $request['username'];
-?>
-
+<DOCTYPE html>
 <html>
-	<head>
-		<title>NJIT Bookies | Login Failed</title>
-		<link rel="stylesheet" type="text/css" href="style.css"
+
+<div class="w3-container w3-cyan">
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+ 	<head>
+		<title>NJIT Bookies | Login</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
-	<body>
+  	<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>NJIT Bookies</b></a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.html"><b>Home</b></a></li>
 			<li><a href="register.html">Register</a></li>
 			<li style="float:right" class="dropdown" >
 			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
@@ -33,32 +24,23 @@
 		</ul>
 
 		<br><br>
-		
+
 		<div>
+			<h1>Login to place your bet!</h1>
+			<form method="post" action="login.php">	
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username"required/>
 
-			<h1>Login</h1>
-		
-			<?php
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required>
 
-				if ($response == "0")
-				{
-					session_start();
-					$_SESSION["username"] = $username;
-					header("Location: profile.php");
-				}
-
-				if ($response == "1")
-				{
-					echo "<b><font color='red'><center>Login failed. You have entered the wrong password.</center></b><br><br>";
-					echo "<center><a href=login.html>Go Back</a></center>";
-				}
-
-				if ($response == "2")
-				{
-					echo "<center><b><font color='red'>Login failed. Could not find username.</center></b><br><br>";
-					echo "<center><a href=login.html>Go Back</a></center>";	
-				}
-			?>
+				<input type="submit" value="Submit">
+			</form>
 		</div>
 	</body>
+
+<img src="football.jpg" alt="football" style="width:304px;height:228px;">
+<img src="bball.jpeg" alt="bball" style="width:250px;height:228px;">
+<img src="baseball.jpg" alt="baseball" style="width:250px;height:228px;">
 </html>
+
