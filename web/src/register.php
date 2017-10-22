@@ -1,104 +1,71 @@
-<?php
-	session_start();
-	$username = $_SESSION["username"];
-
-	if (isset($username))
-	{
-		$loggedIn = True;
-	}
-	else
-	{
-		$loggedIn = False;
-	}
-?>
-
 <DOCTYPE html>
+
 <html>
 	<head>
-		<title>NJIT Bookies</title>
+		<title>NJIT Bookies | Register</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
+  	</head>
 
-	<body>
+  	<body>
 		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>Home</b></a></li>
+			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>NJIT Bookies</b></a></li>
 			<li><a href="register.php">Register</a></li>
-			<li><a href="profile.php">Profile</a></li>
-			<li style="float:right" class="dropdown">
-				
-				<?php
-					if ($loggedIn == True)
-					{
-						echo '<html>
-							<a href="#" class="dropbtn">Logged in as: $username</a>
-							<div class="dropdown-content">	
-								<a href="./scripts/logout.php">Logout</a>
-			    				</div>
-						</html>';
-					}
-					else
-					{
-						echo '
-						<html>
-							<a href="#" class="dropbtn">Logged in as: Anonymous</a>
-							<div class="dropdown-content">	
-								<a href="login.php">Login</a>
-			    				</div>
-						</html>';
-					}
-				?>	
-			</li>
+			<li style="float:right" class="dropdown" >
+			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
+			    <div class="dropdown-content">
+			      <a href="login.php">Login</a>
+			    </div>
+			  </li>
 		</ul>
 
 		<br><br>
-		
-		<div>
-			<h1>NJIT Bookies</h1>
-		<table >
-		<tr>
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Football</h1> </th>
-				</tr>
-				<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
-				
-			</table>
-			</td>
 
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Basketball</h1> </th>
-				</tr>
-								<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
-			</table>
-			</td>
+    		<div>
+			<h1>Register</h1>
+			<form method="post" action="./scripts/register.php">
+			<table> <tr> 
+				<td><label for="email">Email</label></td>
+				<td><input type="email" id="email" name="email" required/></td>
+</tr>
+				<tr><td><label for="password">Password</label></td>	
+				<td><input type="password" id="password" name="password" required/></td></tr>
 
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Baseball</h1> </th>
-				</tr>
-								<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
-			</table>
-			</td>
-		</tr>
-		</table>	
+				<tr><td><label for="confirm_password">Confirm Password</label></td>
+				<td><input type="password" id="confirm_password" name="confirm_password" required/></td></tr>
 
+				<tr><td><label for="firstName">First Name</label></td>
+			    	<td><input type="text" id="firstName" name="firstName"required/></td></tr>
 
+				<tr><td><label for="lastName">Last Name</label></td>
+		       		<td><input type="text" id="lastName" name="lastName" required/></td></tr>
+
+				<tr><td><label for="address">Address</label></td>
+		       		<td><input type="text" id="address" name="address" required/></td></tr>
+
+				<tr><td><input type="submit" value="Submit"></td></tr>
+				</table>
+	    		</form> 
 		</div>
-	</body>
+
+		<script>
+			var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+
+			function validatePassword()
+			{
+			  	if(password.value != confirm_password.value)
+				{
+				   	confirm_password.setCustomValidity("Passwords Don't Match");
+		  		} 
+				else
+				{
+		   			confirm_password.setCustomValidity('');
+		  		}
+			}
+
+			password.onchange = validatePassword;
+			confirm_password.onkeyup = validatePassword;
+		</script>
+  	</body>
 </html>
+
+
