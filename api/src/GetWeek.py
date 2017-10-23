@@ -54,7 +54,7 @@ def insertData(weekOfData):
 			sendRequest(RABBIT_HOST, RABBIT_Q, RABBIT_USER, RABBIT_PASS, RABBIT_VH, RABBIT_EX, RABBIT_PORT, 'insert_game_data', identifier, date, time, awayTeam, homeTeam)
 
 def sendRequest(rabbitServer, rabbitQ, rabbitUser, rabbitPass, rabbitVHost, rabbitEx, rabbitPort, reqType, identifier, date, time, awayTeam, homeTeam):
-	json_encoded_data = json.dumps([reqType, identifier, date, time, awayTeam, homeTeam])
+	json_encoded_data = json.dumps({'type':reqType,'identifier':identifier,'date':date,'time':time,'awayTeam':awayTeam,'homeTeam':homeTeam})
 	creds = pika.PlainCredentials(rabbitUser, rabbitPass)
 	connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitServer, rabbitPort, rabbitVHost, creds))
 	channel = connection.channel()
