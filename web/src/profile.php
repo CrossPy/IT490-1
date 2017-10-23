@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <div class="w3-container w3-cyan">
@@ -34,7 +34,7 @@
 <html>
 
 	<body>
-      		<php print $_SESSION["username"]; ?>
+      		<?php print $_SESSION["username"]; ?>
 	<div>
 		test
     	</div>
