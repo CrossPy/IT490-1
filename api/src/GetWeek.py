@@ -13,7 +13,7 @@ RABBIT_VH = 'backendHost'
 RABBIT_EX = 'backendExchange'
 
 API_USER = 'efiorentine'
-API_PASS = 'Edhp1280!'
+API_PASS = 'IT490sucks'
 
 def getDailyData(sport, username, password, date):
 	date = date.isoformat().replace("-","")
