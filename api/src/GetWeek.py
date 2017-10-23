@@ -28,6 +28,7 @@ def getDailyData(sport, username, password, date):
 				"Authorization":"Basic " + base64.b64encode('{}:{}'.format(username, password).encode('utf-8')).decode('ascii')
 			}
 		)
+		print(sport + "\n")
 		return json.loads(response.text)
 	except requests.exceptions.RequestException:
 		print('Request Failed.')
@@ -42,7 +43,7 @@ def getWeeklyData(sport, username, password):
 	
 	return rtndata
 
-def insertData(weekOfData):
+def insertData(weekOfData, sport):
 	for day in weekOfData:
 		print(day)
 		for game in day['dailygameschedule']["gameentry"]:
@@ -51,10 +52,10 @@ def insertData(weekOfData):
 			time = game["time"]
 			awayTeam = game["awayTeam"]["Name"]
 			homeTeam = game["homeTeam"]["Name"]
-			sendRequest(RABBIT_HOST, RABBIT_Q, RABBIT_USER, RABBIT_PASS, RABBIT_VH, RABBIT_EX, RABBIT_PORT, 'insert_game_data', identifier, date, time, awayTeam, homeTeam)
+			sendRequest(RABBIT_HOST, RABBIT_Q, RABBIT_USER, RABBIT_PASS, RABBIT_VH, RABBIT_EX, RABBIT_PORT, 'insert_game_data', identifier, date, time, awayTeam, homeTeam, sport)
 
-def sendRequest(rabbitServer, rabbitQ, rabbitUser, rabbitPass, rabbitVHost, rabbitEx, rabbitPort, reqType, identifier, date, time, awayTeam, homeTeam):
-	json_encoded_data = json.dumps({'type':reqType,'identifier':identifier,'date':date,'time':time,'awayTeam':awayTeam,'homeTeam':homeTeam})
+def sendRequest(rabbitServer, rabbitQ, rabbitUser, rabbitPass, rabbitVHost, rabbitEx, rabbitPort, reqType, identifier, date, time, awayTeam, homeTeam, sport):
+	json_encoded_data = json.dumps({'type':reqType,'identifier':identifier,'date':date,'time':time,'awayTeam':awayTeam,'homeTeam':homeTeam, 'sport':sport})
 	creds = pika.PlainCredentials(rabbitUser, rabbitPass)
 	connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitServer, rabbitPort, rabbitVHost, creds))
 	channel = connection.channel()
@@ -62,9 +63,19 @@ def sendRequest(rabbitServer, rabbitQ, rabbitUser, rabbitPass, rabbitVHost, rabb
 
 def main():
 	try:
- 		insertData(getWeeklyData('nfl', API_USER, API_PASS))
+		insertData(getWeeklyData('nfl', API_USER, API_PASS), 'nfl')
 	except Exception as e:
+		print(e)
+	try:
+		insertData(getWeeklyData('nba', API_USER, API_PASS), 'nba')
+		print("NBA Done\n")
+	except Exception as e:
+		print(e)
+	try:
+		insertData(getWeeklyData('mlb', API_USER, API_PASS), 'mlb')
+	except Exception as e:
+		print("Error!")
 		print(e)
 
 if __name__ == "__main__":
-	main()	
+	main()
