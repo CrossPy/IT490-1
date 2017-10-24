@@ -1,10 +1,10 @@
 <?php
 
 	return array(
-		'SQL_Server' => '192.168.1.107',
+		'SQL_Server' => 'localhost',
 		'SQL_Port' => '3306',
-		'SQL_User' => 'betting',
-		'SQL_Pass' => 'password123',
+		'SQL_User' => 'root',
+		'SQL_Pass' => 'Skye3011',
 		'SQL_db' => 'IT490'
 	);
 

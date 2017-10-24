@@ -4,7 +4,7 @@
 	require_once('get_host_info.inc');
 	require_once('rabbitMQLib.inc');
 	$configs = include('server_config.php');
-
+	print_r($configs);
 	function requestProcessor($request)
 	{
 		global $response;
@@ -20,7 +20,8 @@
 				return doValidate($request['sessionId']);
 
 			case "register":
-				return doRegister($request['username'],$request['password'],$request['email'], $request['firstName'], $request['lastName'], $request['Address'], $request['SATScore'], $request['major']);
+				print_r($request);
+				return doRegister($request['email'],$request['password'],$request['firstName'],$request['lastName']);
 
 			case "logout":
 				return doLogout($request['username'],$request['password'],$request['sessionId']);
@@ -87,7 +88,7 @@
 		$register = fopen("register.txt", "a") ;
 		$date = date("Y-m-d");
 		$time = date("h:i:sa");
-
+		global $configs;
 		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
 		$sql="select * from users where email='$email'";
@@ -106,9 +107,10 @@
 				return $response;	
 		}else{
 
-			$sql="INSERT INTO users (email, password, firstName, lastName) VALUES('$email', sha1('$password'), '$firstName', '$lastName')";
+			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', sha1('$password'), '$firstName', '$lastName', 100)";
 			if (mysqli_query ($con,$sql))
 			{
+				//echo mysql_error($con);
 				//inserted into database
 				$response = "0";
 				$log = "$date $time Response Code 0: Email $email successfully added to database.\n";
@@ -121,9 +123,8 @@
 
 	function getProfile($username)
 	{	
-		$con=mysqli_connect ($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
+		$con=mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$sql="select * from users where email = '$email'";
-
 		$result=mysqli_query ($con,$sql);
 		$count=mysqli_num_rows ($result);
 
