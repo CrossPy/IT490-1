@@ -28,6 +28,8 @@
 
 			case "profile":
 				return getProfile($request['username']);
+			case "insertGameData":
+				return insert_game_data($request);// waiting for data type.
 		}
 	}
 
@@ -138,7 +140,22 @@
 		$response = array($email, $firstName, $lastName);
 		return $response;
 	}
+	
+	function insertGameData($result) {
+		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
+		$sql="select id from games where id='$result['identifier']'";
+
+		$result=mysqli_query($con,$sql);
+		$count=mysqli_num_rows($result);
+		
+		if ($count < 1) {
+			$date = strtotime($result['time'] . " " . $result['date']);
+			$sql="INSERT INTO games (id, sport, team1, team2, start) 
+				VALUES($result['identifier'], '" . $result['sport'] . "', '" . $result['homeTeam'] . "', '" . $result['awayTeam'] . $date)";
+		}
+	}
+	
 	$server = new rabbitMQServer("RabbitMQ.ini","BackendServer");
 
 	$server->process_requests('requestProcessor');

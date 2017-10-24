@@ -1,10 +1,11 @@
 <?php
 	session_start();
-	$username = $_SESSION["username"];
+
 
 	if (isset($username))
 	{
 		$loggedIn = True;
+		$username = $_SESSION["username"];
 	}
 	else
 	{
@@ -17,87 +18,77 @@
 	<head>
 		<title>NJIT Bookies</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 	</head>
 
 	<body>
-		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="index.php"><b>Home</b></a></li>
-			<li><a href="register.php">Register</a></li>
-			<li><a href="profile.php">Profile</a></li>
-			<li style="float:right" class="dropdown">
-				
-				<?php
-					if ($loggedIn == True)
+		<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="index.php">NJIT Bookies</a>
+			</div>
+			<ul class="nav navbar-nav">
+			  <li class="active"><a href="index.php">Home</a></li>
+			  <li> <a href="register.php">Register</a></li>
+			</ul>	
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> 
+					<?php if ($loggedIn == True)
 					{
-						echo '<html>
-							<a href="#" class="dropbtn">Logged in as: $username</a>
-							<div class="dropdown-content">	
-								<a href="./scripts/logout.php">Logout</a>
-			    				</div>
-						</html>';
+						echo '
+							Logged in as: $username</a> </li>	
+							<li> <a href="./scripts/logout.php">Logout</a> </li>
+			    			
+						';
 					}
 					else
 					{
 						echo '
-						<html>
-							<a href="#" class="dropbtn">Logged in as: Anonymous</a>
-							<div class="dropdown-content">	
-								<a href="login.php">Login</a>
-			    				</div>
-						</html>';
+							Logged in as: Anonymous</a> </li>
+							<li> <a href="login.php">Login</a> </li>';
 					}
-				?>	
-			</li>
-		</ul>
+				?>
+				
+			</ul>
+		</div>
+	</nav>
+
 
 		<br><br>
-		
-		<div>
-			<h1>NJIT Bookies</h1>
-		<table >
-		<tr>
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Football</h1> </th>
-				</tr>
-				<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
+		<h1>NJIT Bookies</h1>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">		
+				<h1>Football</h1>
 				
-			</table>
-			</td>
+				
+					Upcoming sporting Events 
+			
+				Date Time
+				Game 1 10/29/17 01:00PM <button type="button" class="btn-success btn-md"> Bet </button>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<h1>Basketball</h1>
+				
+								
+					 Upcoming sporting Events
+				
+				Date Time
+				Game 1 10/29/17 01:00PM <button type="button" class="btn-success btn-md"> Bet </button>
+				</div>
 
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Basketball</h1> </th>
-				</tr>
-								<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
-			</table>
-			</td>
 
-			<td>
-				<table class="GamesFrontPage" id="1">
-				<tr>
-					<th><h1>Baseball</h1> </th>
-				</tr>
-								<tr>
-					<td> Upcoming sporting Events </td>
-				</tr>
-				<tr><td>Date Time</td></tr>
-				<tr><td>Game 1 10/29/17 01:00PM </td><td><button type="button" > Bet </button></td></tr>
-			</table>
-			</td>
-		</tr>
-		</table>	
-
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<h1>Baseball</h1> 
+				
+								
+					 Upcoming sporting Events 
+				
+				Date Time
+				Game 1 10/29/17 01:00PM <button type="button" class="btn-success btn-md" > Bet </button>
+				
 
 		</div>
 	</body>
