@@ -4,9 +4,11 @@ import datetime
 import json
 import pika
 
-RABBIT_HOST = '192.168.1.110'
+#RABBIT_HOST = '192.168.1.110'
+RABBIT_HOST = '10.224.134.149'
 RABBIT_PORT = 5672
-RABBIT_Q = 'backendQueue'
+#RABBIT_Q = 'backendQueue'
+RABBIT_Q = '*'
 RABBIT_PASS = 'Password123'
 RABBIT_USER = 'backend'
 RABBIT_VH = 'backendHost'

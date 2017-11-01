@@ -1,4 +1,4 @@
-#!/usr/bin/php
+!/usr/bin/php
 <?php
 	require_once('path.inc');
 	require_once('get_host_info.inc');
@@ -27,14 +27,16 @@
 				return doLogout($request['username'],$request['password'],$request['sessionId']);
 
 			case "profile":
-				return getProfile($request['username']);
-			case "insertGameData":
+				return getProfile($request['email']);
+			case "insert_game_data":
+				print_r($request);
 				return insert_game_data($request);// waiting for data type.
 		}
 	}
 
 	function doLogin($email,$password)
 	{
+global $configs;
 		$con=mysqli_connect ($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$login = fopen("login.txt", "a") ;
 		$date = date("Y-m-d");
@@ -50,6 +52,9 @@
 			//username does not exist
 			$response = "2";
 			$string = "$date $time Response Code 2: Email $email does not exist.\n";
+
+			$sqlLog = "insert into event_log values (NOW(), 'Response Code 2: Email $email does not exist.')";
+                        $loggin = $result=mysqli_query($con, $sqlLog);
 
 			fwrite($login, $string);
 			return $response;
@@ -67,6 +72,9 @@
 				//login successful
 				$response = "0";
 				$string = "$date $time Response Code 0: Login successful for email  $email.\n";
+				
+				$sqlLog = "insert into event_log values (NOW(), 'Response Code 0: Login successful for email $email.')";
+                        	$loggin = $result=mysqli_query($con, $sqlLog);
 
 				fwrite($login, $string);
 				return $response;
@@ -78,6 +86,10 @@
 				//wrong password
 				$response = "1";
 				$string = "$date $time Response Code 1: Wrong password for email $email.\n";
+
+				$sqlLog = "insert into event_log values (NOW(), 'Response Code 1: Wrong password for email $email.')";
+                                $loggin = $result=mysqli_query($con, $sqlLog);
+
 
 				fwrite($login, $string);
 				return $response;
@@ -105,6 +117,9 @@
 				$response = "1";
 				$log = "$date $time Response Code 1: Email $email already registered.\n";
 
+				$sqlLog = "insert into event_log values (NOW(), 'Response Code 1: Email $email already registered.')";
+				$loggin = $result=mysqli_query($con, $sqlLog);
+
 				fwrite($register, $log);
 				return $response;	
 		}else{
@@ -112,47 +127,60 @@
 			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', sha1('$password'), '$firstName', '$lastName', 100)";
 			if (mysqli_query ($con,$sql))
 			{
-				//echo mysql_error($con);
+				//echo mysqli_error($con);
 				//inserted into database
 				$response = "0";
 				$log = "$date $time Response Code 0: Email $email successfully added to database.\n";
 
+				$sqlLog = "insert into event_log values (NOW(), 'Response Code 0: Email $email successfully added to database.')";
+                                $loggin = $result=mysqli_query($con, $sqlLog);
+				
 				fwrite($register, $log);
 				return $response;
 			}
 		}
 	}
 
-	function getProfile($username)
+	function getProfile($email)
 	{	
 		$con=mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$sql="select * from users where email = '$email'";
 		$result=mysqli_query ($con,$sql);
 		$count=mysqli_num_rows ($result);
+		echo $email;		
 
 		while ($row=mysqli_fetch_array($result))
 		{
 			$email = $row['email'];
 			$firstName = $row['firstName'];
 			$lastName = $row['lastName'];		
+			$balance = $row['balance'];
 		}
 
-		$response = array($email, $firstName, $lastName);
+		$response = array($email, $firstName, $lastName, $balance);
 		return $response;
 	}
 	
-	function insertGameData($result) {
+	function insert_game_data($result) {
+		global $configs;
 		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
-		$sql="select id from games where id='$result['identifier']'";
+		$sql="select id from games where id='" . $result["identifier"] ."'";
 
-		$result=mysqli_query($con,$sql);
-		$count=mysqli_num_rows($result);
+		$query = mysqli_query($con,$sql);
+		$count = mysqli_num_rows($query);
 		
 		if ($count < 1) {
-			$date = strtotime($result['time'] . " " . $result['date']);
-			$sql="INSERT INTO games (id, sport, team1, team2, start) 
-				VALUES($result['identifier'], '" . $result['sport'] . "', '" . $result['homeTeam'] . "', '" . $result['awayTeam'] . $date)";
+			$date = date("Y-m-d H:i:s", strtotime($result['time'] . " " . $result['date']));
+			$sql = "INSERT INTO games (id, sport, team1, team2, start) 
+				VALUES(" .$result['identifier'] . ", '" . $result['sport'] . "', '" . $result['homeTeam'] . "', '" . $result['awayTeam'] . "', '$date')";
+			$insert = mysqli_query($con, $sql);
+			echo mysqli_error($con);
+			
+			$sqlLog = "insert into event_log values (NOW(), 'Game ID " . $result['identifier'] . " inserted into database')";
+                        $loggin = $result=mysqli_query($con, $sqlLog);
+			echo mysqli_error($con);
+
 		}
 	}
 	

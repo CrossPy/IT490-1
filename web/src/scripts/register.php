@@ -10,6 +10,7 @@
 
 		$request = array();
 		$request['type'] = "register";
+		//$request['type'] = "insert_game_data";
 		$request['password'] = $_POST["password"];
 		$request['email'] = $_POST["email"];
 		$request['firstName'] = $_POST["firstName"];
@@ -27,7 +28,7 @@
 <html>
 	<head>
 		<title>NJIT Bookies | Register Failed</title>
-		<link rel="stylesheet" type="text/css" href="style.css"
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body>
