@@ -35,67 +35,25 @@
 		}
 	}
 
-	function doLogin($email,$password)
-	{
-global $configs;
-		$con=mysqli_connect ($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
-		$login = fopen("login.txt", "a") ;
-		$date = date("Y-m-d");
-		$time = date("h:i:sa");
-
-		$sql="select * from users where email = '$email'";
-
-		$result=mysqli_query($con,$sql);
-		$count=mysqli_num_rows($result);
-
-		if ($count < 1)
-		{
-			//username does not exist
-			$response = "2";
-			$string = "$date $time Response Code 2: Email $email does not exist.\n";
-
-			$sqlLog = "insert into event_log values (NOW(), 'Response Code 2: Email $email does not exist.')";
-                        $loggin = $result=mysqli_query($con, $sqlLog);
-
-			fwrite($login, $string);
+	function doLogin($email, $password){
+		global $configs;
+		
+		//Initialize the connection to the database.
+		$con = mysqli_connect ($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
+		//Constructing the query to find user in the database.
+		$sql = "select password from users where email = '$email'";
+		$result = mysqli_query($con, $sql);
+		$count = mysqli_num_rows($result);
+		if ($count == 1){
+			if (password_verify($password, $result)){
+				$response = "0";
+				return $response;
+			}
+		}else{
+			$response = "1"
 			return $response;
 		}
-		else
-		{
 
-			$sql="select * from users where email = '$email' AND password = sha1('$password')";
-
-			$result=mysqli_query($con,$sql);
-			$count=mysqli_num_rows($result);
-
-			if ($count == 1)
-			{
-				//login successful
-				$response = "0";
-				$string = "$date $time Response Code 0: Login successful for email  $email.\n";
-				
-				$sqlLog = "insert into event_log values (NOW(), 'Response Code 0: Login successful for email $email.')";
-                        	$loggin = $result=mysqli_query($con, $sqlLog);
-
-				fwrite($login, $string);
-				return $response;
-
-			}
-
-			elseif ($count == 0)
-			{
-				//wrong password
-				$response = "1";
-				$string = "$date $time Response Code 1: Wrong password for email $email.\n";
-
-				$sqlLog = "insert into event_log values (NOW(), 'Response Code 1: Wrong password for email $email.')";
-                                $loggin = $result=mysqli_query($con, $sqlLog);
-
-
-				fwrite($login, $string);
-				return $response;
-			}
-		}
 	}
 
 	function doRegister($email, $password, $firstName, $lastName)
