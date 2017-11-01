@@ -49,9 +49,12 @@
 	</nav>
 	
 	<main style="width: 320px; margin: auto;">
-		<h1>Register</h1>
+		
 		<form method="post" action="./scripts/register.php">
 		<table>
+		<thead>
+			<tr><th colspan="2"><h1>Register</h1></th></tr>
+		</thead>
 		<tbody>
 			<tr> 
 			<td><label for="email">Email</label></td>
@@ -72,7 +75,7 @@
 			<tr><td><label for="address">Address</label></td>
 				<td><input type="text" class="form-control" id="address" name="address" required/></td></tr>
 
-			<tr><td><input type="submit" class="form-control" value="Submit"></td></tr>
+			<tr><td colspan="2"><br/><button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign up</button></td></tr>
 		</tbody>
 		</table>
 		</form>

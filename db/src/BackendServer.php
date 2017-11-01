@@ -4,7 +4,7 @@
 	require_once('get_host_info.inc');
 	require_once('rabbitMQLib.inc');
 	$configs = include('server_config.php');
-
+	print_r($configs);
 	function requestProcessor($request)
 	{
 		global $response;
@@ -20,13 +20,16 @@
 				return doValidate($request['sessionId']);
 
 			case "register":
-				return doRegister($request['username'],$request['password'],$request['email'], $request['firstName'], $request['lastName'], $request['Address'], $request['SATScore'], $request['major']);
+				print_r($request);
+				return doRegister($request['email'],$request['password'],$request['firstName'],$request['lastName']);
 
 			case "logout":
 				return doLogout($request['username'],$request['password'],$request['sessionId']);
 
 			case "profile":
 				return getProfile($request['username']);
+			case "insertGameData":
+				return insert_game_data($request);// waiting for data type.
 		}
 	}
 
@@ -87,7 +90,7 @@
 		$register = fopen("register.txt", "a") ;
 		$date = date("Y-m-d");
 		$time = date("h:i:sa");
-
+		global $configs;
 		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
 		$sql="select * from users where email='$email'";
@@ -106,9 +109,10 @@
 				return $response;	
 		}else{
 
-			$sql="INSERT INTO users (email, password, firstName, lastName) VALUES('$email', sha1('$password'), '$firstName', '$lastName')";
+			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', sha1('$password'), '$firstName', '$lastName', 100)";
 			if (mysqli_query ($con,$sql))
 			{
+				//echo mysql_error($con);
 				//inserted into database
 				$response = "0";
 				$log = "$date $time Response Code 0: Email $email successfully added to database.\n";
@@ -121,9 +125,8 @@
 
 	function getProfile($username)
 	{	
-		$con=mysqli_connect ($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
+		$con=mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$sql="select * from users where email = '$email'";
-
 		$result=mysqli_query ($con,$sql);
 		$count=mysqli_num_rows ($result);
 
@@ -137,7 +140,22 @@
 		$response = array($email, $firstName, $lastName);
 		return $response;
 	}
+	
+	function insertGameData($result) {
+		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
+		$sql="select id from games where id='$result['identifier']'";
+
+		$result=mysqli_query($con,$sql);
+		$count=mysqli_num_rows($result);
+		
+		if ($count < 1) {
+			$date = strtotime($result['time'] . " " . $result['date']);
+			$sql="INSERT INTO games (id, sport, team1, team2, start) 
+				VALUES($result['identifier'], '" . $result['sport'] . "', '" . $result['homeTeam'] . "', '" . $result['awayTeam'] . $date)";
+		}
+	}
+	
 	$server = new rabbitMQServer("RabbitMQ.ini","BackendServer");
 
 	$server->process_requests('requestProcessor');
