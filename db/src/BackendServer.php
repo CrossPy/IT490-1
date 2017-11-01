@@ -27,6 +27,7 @@
 				return doLogout($request['username'],$request['password'],$request['sessionId']);
 
 			case "profile":
+				print_r($request);
 				return getProfile($request['email']);
 			case "insert_game_data":
 				print_r($request);
@@ -142,18 +143,19 @@ global $configs;
 	}
 
 	function getProfile($email)
-	{	
+	{
+		global $configs;	
+		echo $email;
 		$con=mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$sql="select * from users where email = '$email'";
 		$result=mysqli_query ($con,$sql);
-		$count=mysqli_num_rows ($result);
-		echo $email;		
+		$count=mysqli_num_rows ($result);		
 
 		while ($row=mysqli_fetch_array($result))
 		{
 			$email = $row['email'];
-			$firstName = $row['firstName'];
-			$lastName = $row['lastName'];		
+			$firstName = $row['firstname'];
+			$lastName = $row['lastname'];		
 			$balance = $row['balance'];
 		}
 
