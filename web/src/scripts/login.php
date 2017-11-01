@@ -7,11 +7,11 @@
 
 	$request = array();
 	$request['type'] = "login";
-	$request['username'] = $_POST["email"];
+	$request['email'] = $_POST["email"];
 	$request['password'] = $_POST["password"];
 	$response = $client->send_request($request);
 
-	$username = $request['username'];
+	$username = $request['email'];
 ?>
 
 <html>
