@@ -63,7 +63,7 @@
 		$time = date("h:i:sa");
 		global $configs;
 		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
-
+		$password = password_hash($password, PASSWORD_DEFAULT);
 		$sql="select * from users where email='$email'";
 
 		$result=mysqli_query($con,$sql);
@@ -83,7 +83,7 @@
 				return $response;	
 		}else{
 
-			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', sha1('$password'), '$firstName', '$lastName', 100)";
+			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', '$password', '$firstName', '$lastName', 100)";
 			if (mysqli_query ($con,$sql))
 			{
 				//echo mysqli_error($con);
