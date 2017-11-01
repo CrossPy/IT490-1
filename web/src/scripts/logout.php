@@ -4,32 +4,8 @@
 	session_unset();
 
 	session_destroy();
+	header("Location: ../index.php");
 ?>
 
-<DOCTYPE html>
-<html>
-	<head>
-		<title>NJIT Bookies | Logout</title>
-		<link rel="stylesheet" type="text/css" href="style.css"
-	</head>
 
-	<body>
-		<ul>
-			<li style="color:green; border-right: 1px solid #bbb"><a href="../index.php"><b>NJIT Bookies</b></a></li>
-			<li><a href="../register.php">Register</a></li>
-			<li style="float:right" class="dropdown" >
-			    <a href="#" class="dropbtn">Logged in as: <?php if (isset($username)) {echo "<b>$username<b>";} else {echo "<b>Anonymous<b>";}?></a>
-				<div class="dropdown-content">
-			      <a href="../login.php">Login</a>
-			    </div>
-			  </li>
-		</ul>
-
-		<br><br>
-		
-		<div>
-			<p><center>You have successfully logged out</center></p>
-		</div>
-	</body>
-</html>
 
