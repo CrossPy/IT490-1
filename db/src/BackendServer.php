@@ -50,7 +50,7 @@
 				return $response;
 			}
 		}else{
-			$response = "1"
+			$response = "1";
 			return $response;
 		}
 
