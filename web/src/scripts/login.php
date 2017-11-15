@@ -17,7 +17,7 @@
 <html>
 	<head>
 		<title>NJIT Bookies | Login Failed</title>
-		<link rel="stylesheet" type="text/css" href="style.css"
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 
 	<body>
@@ -49,14 +49,8 @@
 
 				if ($response == "1")
 				{
-					echo "<b><font color='red'><center>Login failed. You have entered the wrong password.</center></b><br><br>";
-					echo "<center><a href=login.php>Go Back</a></center>";
-				}
-
-				if ($response == "2")
-				{
-					echo "<center><b><font color='red'>Login failed. Could not find username.</center></b><br><br>";
-					echo "<center><a href=login.php>Go Back</a></center>";	
+					echo '<p style="text: center;">Login could not be authenticated</p>';
+					header('Refresh: 3; url= ../login.php');
 				}
 			?>
 		</div>

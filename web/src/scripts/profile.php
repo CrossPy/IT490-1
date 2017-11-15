@@ -10,7 +10,7 @@
 
 	$request = array();
 	$request['type'] = "profile";
-	$request['username'] = $username;
+	$request['email'] = $username;
 	$response = $client->send_request($request);
 
 	$length = count($response);

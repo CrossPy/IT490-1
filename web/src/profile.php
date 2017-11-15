@@ -32,34 +32,22 @@
 			  <a class="navbar-brand" href="index.php">NJIT Bookies</a>
 			</div>
 			<ul class="nav navbar-nav">
-			  <li><a href="index.php">Home</a></li>
-			  <li><a href="register.php">Register</a></li>
+			<li><a href="index.php">Home</a></li>
+			<li><a href="games.php">Games</a></li>
 			</ul>	
 			<ul class="nav navbar-nav navbar-right">
 				<li><li class="active"><a href="profile.php"><span class="glyphicon glyphicon-user"></span> <?php if (isset($email)) {echo "<b>$email</b>";} else {echo "<b>Anonymous</b>";}?></a></li>
-				<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				<li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 			</ul>
 		</div>
 	</nav>
-	
 
-
-<body> 
-
-
-
-
-
-
-
-<html>
-
-	<body>
 <?php 
-	echo "<h1> $response[1] $response[2] </h1>";		
+	echo "<h1>Hello $response[1] $response[2] </h1><br/>
+		Current balance is \$$response[3]";		
 ?>
 
 
-	</body>
+</body>
 
 </html>

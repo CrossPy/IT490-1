@@ -39,11 +39,18 @@
 			</div>
 			<ul class="nav navbar-nav">
 			  <li><a href="index.php">Home</a></li>
-			  <li class="active"><a href="register.php">Register</a></li>
 			</ul>	
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> <?php if (isset($username)) {echo "<br/><b>$username</b>";} else {echo "<b>Anonymous</b>";}?></a></li>
-				<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				<?php
+                                        if (isset($_SESSION['username'])) {
+                                                echo '<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>' . $_SESSION['username'] . '</a></li>    
+                                                        <li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a> </li>';
+                                        }
+                                        else {
+						echo '<li class="active"><a href="register.php">Register</a></li>
+						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+                                        }
+				?>
 			</ul>
 		</div>
 	</nav>
@@ -51,33 +58,30 @@
 	<main style="width: 320px; margin: auto;">
 		
 		<form method="post" action="./scripts/register.php">
-		<table>
-		<thead>
-			<tr><th colspan="2"><h1>Register</h1></th></tr>
-		</thead>
-		<tbody>
-			<tr> 
-			<td><label for="email">Email</label></td>
-			<td><input type="email" class="form-control" id="email" name="email" required/></td>
-			</tr>
-			<tr><td><label for="password">Password</label></td>	
-			<td><input type="password" class="form-control" id="password" name="password" required/></td></tr>
+		<h1>Register</h1>
+		Already a member? <a href="login.php">Log in here</a>
+		<br/>
+			<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" name="email" required/>
+			
+			<label for="password">Password</label>
+			<input type="password" class="form-control" id="password" name="password" required/>
 
-			<tr><td><label for="confirm_password">Confirm Password</label></td>
-			<td><input type="password" class="form-control" id="confirm_password" name="confirm_password" required/></td></tr>
+			<label for="confirm_password">Confirm Password</label>
+			<input type="password" class="form-control" id="confirm_password" name="confirm_password" required/>
 
-			<tr><td><label for="firstName">First Name</label></td>
-				<td><input type="text" class="form-control" id="firstName" name="firstName" required/></td></tr>
+			<label for="firstName">First Name</label>
+			<input type="text" class="form-control" id="firstName" name="firstName" required/>
 
-			<tr><td><label for="lastName">Last Name</label></td>
-				<td><input type="text" class="form-control" id="lastName" name="lastName" required/></td></tr>
+			<label for="lastName">Last Name</label>
+			<input type="text" class="form-control" id="lastName" name="lastName" required/>
 
-			<tr><td><label for="address">Address</label></td>
-				<td><input type="text" class="form-control" id="address" name="address" required/></td></tr>
-
-			<tr><td colspan="2"><br/><button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign up</button></td></tr>
-		</tbody>
-		</table>
+			<label for="address">Address</label>
+			<input type="text" class="form-control" id="address" name="address" required/>
+			<br/>
+			<button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign up</button>
+		</div>
 		</form>
 	</main>
   	</body>
