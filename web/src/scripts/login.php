@@ -1,4 +1,7 @@
-<?php
+<?php 
+	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+	ini_set('display_errors' , 1);
+
 	require_once('../path.inc');
 	require_once('../get_host_info.inc');
 	require_once('../rabbitMQLib.inc');
@@ -47,8 +50,7 @@
 					header("Location: ../profile.php");
 				}
 
-				if ($response == "1")
-				{
+				 else {
 					echo '<p style="text: center;">Login could not be authenticated</p>';
 					header('Refresh: 3; url= ../login.php');
 				}

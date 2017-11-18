@@ -201,7 +201,7 @@ class rabbitMQClient
 
 	function send_request($message)
 	{
-		echo '<br />';
+		//echo '<br />';
 		//print_r($message);
 		$uid = uniqid();
 	

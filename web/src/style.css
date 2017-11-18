@@ -1,3 +1,9 @@
-body {color:#000!important;background-color:#00bcd4!important}
+body {
+	color: white !important;
+	background-color: #303030 !important;
+}
 
-
+main {
+	max-width: 980px; 
+	margin: auto;
+}
