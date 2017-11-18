@@ -1,5 +1,9 @@
 <?php
 	session_start();
+
+	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+	ini_set('display_errors' , 1);
+
 	if(!isset($_SESSION['username'])) {
 		header("Location: index.php");
 	}
@@ -49,7 +53,25 @@
 <?php 
 	echo "<h1>Hello " . $response['firstName'] . " " . $response['lastName'] . "</h1><br/>
 		Current balance is $" . $response['balance'];	
-	echo "<br/>" . $response['history'][''];
+	$transHistory = '<fieldset>
+			<legend>Transaction History</legend>
+				<div class="col-sm-12"><table class="table">
+				<thead><tr>
+				<th>Sport</th>
+				<th>Game</th>
+				<th>Date</th>
+				<th>Bet Team</th>
+				<th>Amount</th>
+				<th>Transaction Date</th>
+				</tr></thead><tbody>';
+	for ($i = 0; $i < count($response['history']); $i++) {
+ 		$transHistory .= '<tr><td>' . $response['history'][$i]['sport'] . '</td><td>' . $response['history'][$i]['team1'] 
+		. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
+		. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
+		. $response['history'][$i]['timestamp'] . '</td></tr>';
+	}
+	$transHistory .= "</tbody></table></div><fieldset>";
+	echo $transHistory;
 ?>
 
 </main>
