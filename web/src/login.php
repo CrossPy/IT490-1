@@ -13,9 +13,8 @@
 </head>
 
 <body>
-	<main>
 	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="index.php">NJIT Bookies</a>
 			</div>
@@ -31,23 +30,21 @@
 	</nav>
 	
 	<div style="width: 380px; margin: auto;">	
-	<div class="page-header">
-	<h1>Login</h1>
-	</div>
-	<div class="form-group">
-		<form action="./scripts/login.php" method="post">	
-			<label for="email">Email</label>
-			<input type="text" class="form-control" id="email" name="email" required/>
+		<div class="page-header">
+			<h1>Login</h1>
+		</div>
+		<div class="form-group">
+			<form action="./scripts/login.php" method="post">	
+				<label for="email">Email</label>
+				<input type="text" class="form-control" id="email" name="email" required/>
 
-			<label for="password">Password</label>
-			<input type="password" class="form-control" id="password" name="password" required/>
-			<br/>
-			<button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign in</button>
-		</form>
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" name="password" required/>
+				<br/>
+				<button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign in</button>
+			</form>
+		</div>
 	</div>
-	</div>
-	</div>
-	</main>
 </body>
 </html>
 

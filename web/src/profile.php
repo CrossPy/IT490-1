@@ -32,9 +32,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-<main>
 	<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
+	<div class="container">
 		<div class="navbar-header">
 		  <a class="navbar-brand" href="index.php">NJIT Bookies</a>
 		</div>
@@ -49,32 +48,30 @@
 		</ul>
 	</div>
 	</nav>
-
-<?php 
-	echo "<h1>Hello " . $response['firstName'] . " " . $response['lastName'] . "</h1><br/>
-		Current balance is $" . $response['balance'];	
-	$transHistory = '<fieldset>
-			<legend>Transaction History</legend>
-				<div class="col-sm-12"><table class="table">
-				<thead><tr>
-				<th>Sport</th>
-				<th>Game</th>
-				<th>Date</th>
-				<th>Bet Team</th>
-				<th>Amount</th>
-				<th>Transaction Date</th>
-				</tr></thead><tbody>';
-	for ($i = 0; $i < count($response['history']); $i++) {
- 		$transHistory .= '<tr><td>' . $response['history'][$i]['sport'] . '</td><td>' . $response['history'][$i]['team1'] 
-		. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
-		. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
-		. $response['history'][$i]['timestamp'] . '</td></tr>';
-	}
-	$transHistory .= "</tbody></table></div><fieldset>";
-	echo $transHistory;
-?>
-
-</main>
+	<div class="container">
+		<?php 
+			echo "<h1>Hello " . $response['firstName'] . " " . $response['lastName'] . "</h1><br/>
+					Current balance is $" . $response['balance'];	
+			$transHistory = '<h4>Transaction History</h4>
+						<div class="col-sm-12"><table class="table">
+						<thead><tr>
+						<th>Sport</th>
+						<th>Game</th>
+						<th>Date</th>
+						<th>Bet Team</th>
+						<th>Amount</th>
+						<th>Transaction Date</th>
+						</tr></thead><tbody>';
+			for ($i = 0; $i < count($response['history']); $i++) {
+				$transHistory .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
+				. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
+				. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
+				. $response['history'][$i]['timestamp'] . '</td></tr>';
+			}
+			$transHistory .= "</tbody></table></div><fieldset>";
+			echo $transHistory;
+		?>
+	</div>
 </body>
 
 </html>

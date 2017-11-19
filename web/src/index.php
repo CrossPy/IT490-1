@@ -28,9 +28,8 @@
 	</head>
 
 	<body>
-	<main>
-		<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
+	<nav class="navbar navbar-inverse">
+		<div class="container">
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="index.php">NJIT Bookies</a>
 			</div>
@@ -54,35 +53,34 @@
 					}
 				?>				
 			</ul>
-		</div>
-		</nav>
+		</div>		
+	</nav>
+	<div class="container">	
 		<?php
 			require_once('path.inc');
-        		require_once('get_host_info.inc');
-        		require_once('rabbitMQLib.inc');
+        	require_once('get_host_info.inc');
+        	require_once('rabbitMQLib.inc');
+       		$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
 
-        		$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
-
-		        $request = array();
-        		$request['type'] = "games";
-			$request['numOfGame'] = 3;
-		        $response = $client->send_request($request);
+	        $request = array();
+       		$request['type'] = "games";
+			$request['numOfGame'] = 10;
+	        $response = $client->send_request($request);
 			$games = json_decode($response, true);
 
 			$nba = '<div class="col-sm-4">
-				<table class="table table-hover">              
-                         	<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
-                         	<tbody>
+				<table class="table">              
+                   	<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
+                   	<tbody>
 					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
 			if (empty($games['nba'][0])) {
-                                $nba .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-                        }
-                        else {                                
-				for ($i = 0; $i < count($games['nba']); $i++){
+				$nba .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
+			}
+			else {                                
+				for ($i = 0; $i < count($games['nba']) && $i < 3; $i++){
 					$nba .= '<tr><td>' . $games['nba'][$i]['team1'] . ' vs ' .  $games['nba'][$i]['team2'] . '</td><td>' . 
 					date("Y-m-d h:i:sa", strtotime($games['nba'][$i]['start'])) . '</td><td><button id="' .$games['nba'][$i]['id'] . 
 					'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-
 				}
 			}
 			$nba .= '</tbody></table></div>';
@@ -90,44 +88,43 @@
 			echo $nba;
 
 			$nfl = '<div class="col-sm-4">
-                                <table class="table">              
-                                <thead><tr><th colspan="2"><h1>Football</h1></th></tr></thead>
-                                <tbody>
-                                        <tr><td>Upcoming Games</td><td>Date Time</td></tr>';
+					<table class="table">              
+					<thead><tr><th colspan="3"><h1>Football</h1></th></tr></thead>
+					<tbody>
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
 			if (empty($games['nfl'][0])) {
 				$nfl .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
 			}
-                        else {
-				for ($i = 0; $i < count($games['nfl']); $i++){
-                                	$nfl .= '<tr><td>' . $games['nfl'][$i]['team1'] . ' vs ' .  $games['nfl'][$i]['team2'] . '</td><td>' .
-                                        date("Y-m-d h:i:sa", strtotime($games['nfl'][$i]['start'])) . '</td><td><button id="' .$games['nba'][$i]['id'] .
-                                        '" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-                        	}
+			else {
+				for ($i = 0; $i < count($games['nfl']) and $i < 3; $i++){
+					$nfl .= '<tr><td>' . $games['nfl'][$i]['team1'] . ' vs ' .  $games['nfl'][$i]['team2'] . '</td><td>' .
+					date("Y-m-d h:i:sa", strtotime($games['nfl'][$i]['start'])) . '</td><td><button id="' .$games['nfl'][$i]['id'] .
+						'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
+				}
 			}
-                        $nfl .= '</tbody></table></div>';
+			$nfl .= '</tbody></table></div>';
 
-                        echo $nfl;
-		
+			echo $nfl;
 
 			$mlb = '<div class="col-sm-4">
-                        	 <table class="table">              
-                                 <thead><tr><th colspan="2"><h1>Baseball</h1></th></tr></thead>
-                                 <tbody>
-                                         <tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-                        if (empty($games['nfl'][0])) {
-                                  $mlb .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-                        }
-                        else {
-                                for ($i = 0; $i < count($games['mlb']); $i++){
-                        		$mlb .= '<tr><td>' . $games['mlb'][$i]['team1'] . ' vs ' .  $games['mlb'][$i]['team2'] . '</td><td>' .
-                                        date("Y-m-d h:i:sa", strtotime($games['mlb'][$i]['start'])) . '</td><td><button id="' . $games['mlb'][$i]['id'] . 
-					'" type="button" class="btn btn-default btn-block">Place Bet></button></td></tr>';
-                                 }
-                         }
-                         $mlb .= '</tbody></table></div>';
+					<table class="table">              
+					<thead><tr><th colspan="3"><h1>Baseball</h1></th></tr></thead>
+					<tbody>
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
+			if (empty($games['mlb'][0])) {
+				  $mlb .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
+			}
+			else {
+				for ($i = 0; $i < count($games['mlb'])and $i < 3; $i++){
+					$mlb .= '<tr><td>' . $games['mlb'][$i]['team1'] . ' vs ' .  $games['mlb'][$i]['team2'] . '</td><td>' .
+					date("Y-m-d h:i:sa", strtotime($games['mlb'][$i]['start'])) . '</td><td><button id="' . $games['mlb'][$i]['id'] . 
+						'" type="button" class="btn btn-default btn-block">Place Bet></button></td></tr>';
+				}
+			}
+			$mlb .= '</tbody></table></div>';
  
-                         echo $mlb;
-			?>
-	</main>
+			echo $mlb;
+		?>
+	</div>
 	</body>
 </html>
