@@ -17,14 +17,28 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<meta charset="utf-8">
+	<title>NJIT Bookies | Home</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
 		
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css"/>
+	
+	<script>
+		$(document).ready(function(){		
+			$("button").click(function(){				
+				var id  = $(this).attr("id");
+				$('#div_' + id).css("display","block");
+			});			
+		});
+		function cancelBet(id){
+			document.getElementById("div_" + id).style.display = "none";
+		}
+	</script>
 	</head>
 
 	<body>
@@ -42,7 +56,7 @@
 					<?php					
 					if (isset($_SESSION['username']))
 					{
-						echo '<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>' . $_SESSION['username'] . '</a></li>	
+						echo '<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['username'] . '</a></li>	
 							<li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a> </li>';
 					}
 					else
@@ -55,6 +69,7 @@
 			</ul>
 		</div>		
 	</nav>
+
 	<div class="container">	
 		<?php
 			require_once('path.inc');
@@ -64,66 +79,44 @@
 
 	        $request = array();
        		$request['type'] = "games";
-			$request['numOfGame'] = 10;
 	        $response = $client->send_request($request);
 			$games = json_decode($response, true);
 
-			$nba = '<div class="col-sm-4">
-				<table class="table">              
+			require_once('scripts/functions.php');
+			
+			$nba = getPrepareGameScedule($games['nba'], 5);
+			echo '<div class="col-sm-4">
+					<table class="table">              
                    	<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
                    	<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['nba'][0])) {
-				$nba .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-			}
-			else {                                
-				for ($i = 0; $i < count($games['nba']) && $i < 3; $i++){
-					$nba .= '<tr><td>' . $games['nba'][$i]['team1'] . ' vs ' .  $games['nba'][$i]['team2'] . '</td><td>' . 
-					date("Y-m-d h:i:sa", strtotime($games['nba'][$i]['start'])) . '</td><td><button id="' .$games['nba'][$i]['id'] . 
-					'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-				}
-			}
-			$nba .= '</tbody></table></div>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $nba[0] . '</tbody></table></div>';
 
-			echo $nba;
-
-			$nfl = '<div class="col-sm-4">
+			$nfl = getPrepareGameScedule($games['nfl'], 5);
+			echo '<div class="col-sm-4">
 					<table class="table">              
 					<thead><tr><th colspan="3"><h1>Football</h1></th></tr></thead>
 					<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['nfl'][0])) {
-				$nfl .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-			}
-			else {
-				for ($i = 0; $i < count($games['nfl']) and $i < 3; $i++){
-					$nfl .= '<tr><td>' . $games['nfl'][$i]['team1'] . ' vs ' .  $games['nfl'][$i]['team2'] . '</td><td>' .
-					date("Y-m-d h:i:sa", strtotime($games['nfl'][$i]['start'])) . '</td><td><button id="' .$games['nfl'][$i]['id'] .
-						'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-				}
-			}
-			$nfl .= '</tbody></table></div>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $nfl[0] . '</tbody></table></div>';
 
-			echo $nfl;
-
-			$mlb = '<div class="col-sm-4">
+			$mlb = getPrepareGameScedule($games['mlb'], 5);
+			echo '<div class="col-sm-4">
 					<table class="table">              
 					<thead><tr><th colspan="3"><h1>Baseball</h1></th></tr></thead>
 					<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['mlb'][0])) {
-				  $mlb .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $mlb[0] . '</tbody></table></div>';
+			
+			if ($nba[1] != null) {
+				echo $nba[1];
 			}
-			else {
-				for ($i = 0; $i < count($games['mlb'])and $i < 3; $i++){
-					$mlb .= '<tr><td>' . $games['mlb'][$i]['team1'] . ' vs ' .  $games['mlb'][$i]['team2'] . '</td><td>' .
-					date("Y-m-d h:i:sa", strtotime($games['mlb'][$i]['start'])) . '</td><td><button id="' . $games['mlb'][$i]['id'] . 
-						'" type="button" class="btn btn-default btn-block">Place Bet></button></td></tr>';
-				}
+			if ($nfl[1] != null) {
+				echo $nfl[1];
 			}
-			$mlb .= '</tbody></table></div>';
- 
-			echo $mlb;
+			if ($mlb[1] != null) {
+				echo $mlb[1];
+			}
 		?>
 	</div>
 	</body>

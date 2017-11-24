@@ -64,66 +64,44 @@
 
 	        $request = array();
        		$request['type'] = "games";
-			$request['numOfGame'] = 10;
 	        $response = $client->send_request($request);
 			$games = json_decode($response, true);
-
-			$nba = '<div class="col-sm-4">
-				<table class="table">              
+			
+			require_once('scripts/functions.php');
+			
+			$nba = getPrepareGameScedule($games['nba'], 20);
+			echo '<div class="col-sm-12">
+					<table class="table">              
                    	<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
                    	<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['nba'][0])) {
-				$nba .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-			}
-			else {                                
-				for ($i = 0; $i < count($games['nba']); $i++){
-					$nba .= '<tr><td>' . $games['nba'][$i]['team1'] . ' vs ' .  $games['nba'][$i]['team2'] . '</td><td>' . 
-					date("Y-m-d h:i:sa", strtotime($games['nba'][$i]['start'])) . '</td><td><button id="' .$games['nba'][$i]['id'] . 
-					'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-				}
-			}
-			$nba .= '</tbody></table></div>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $nba[0] . '</tbody></table></div>';
 
-			echo $nba;
-
-			$nfl = '<div class="col-sm-4">
+			$nfl = getPrepareGameScedule($games['nfl'], 20);
+			echo '<div class="col-sm-12">
 					<table class="table">              
 					<thead><tr><th colspan="3"><h1>Football</h1></th></tr></thead>
 					<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['nfl'][0])) {
-				$nfl .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
-			}
-			else {
-				for ($i = 0; $i < count($games['nfl']); $i++){
-					$nfl .= '<tr><td>' . $games['nfl'][$i]['team1'] . ' vs ' .  $games['nfl'][$i]['team2'] . '</td><td>' .
-					date("Y-m-d h:i:sa", strtotime($games['nfl'][$i]['start'])) . '</td><td><button id="' .$games['nfl'][$i]['id'] .
-						'" type="button" class="btn btn-primary btn-block">Place Bet</button></td></tr>';
-				}
-			}
-			$nfl .= '</tbody></table></div>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $nfl[0] . '</tbody></table></div>';
 
-			echo $nfl;
-
-			$mlb = '<div class="col-sm-4">
+			$mlb = getPrepareGameScedule($games['mlb'], 20);
+			echo '<div class="col-sm-12">
 					<table class="table">              
-					<thead><tr><th colspan="2"><h1>Baseball</h1></th></tr></thead>
+					<thead><tr><th colspan="3"><h1>Baseball</h1></th></tr></thead>
 					<tbody>
-					<tr><td>Upcoming Games</td><td>Date Time</td></tr>';
-			if (empty($games['nfl'][0])) {
-				  $mlb .= '<tr><td colspan="2">There are no scheduled games in the next week.</td></tr>';
+					<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+					. $mlb[0] . '</tbody></table></div>';
+			
+			if ($nba[1] != null) {
+				echo $nba[1];
 			}
-			else {
-				for ($i = 0; $i < count($games['mlb']); $i++){
-					$mlb .= '<tr><td>' . $games['mlb'][$i]['team1'] . ' vs ' .  $games['mlb'][$i]['team2'] . '</td><td>' .
-					date("Y-m-d h:i:sa", strtotime($games['mlb'][$i]['start'])) . '</td><td><button id="' . $games['mlb'][$i]['id'] . 
-						'" type="button" class="btn btn-default btn-block">Place Bet></button></td></tr>';
-				}
+			if ($nfl[1] != null) {
+				echo $nfl[1];
 			}
-			$mlb .= '</tbody></table></div>';
- 
-			echo $mlb;
+			if ($mlb[1] != null) {
+				echo $mlb[1];
+			}
 			?>
 	</div>
 	</body>
