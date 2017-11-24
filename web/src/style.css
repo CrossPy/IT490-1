@@ -3,7 +3,24 @@ body {
 	background-color: #303030 !important;
 }
 
-main {
-	max-width: 980px; 
+.overlay{
+	opacity:0.92;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	display: none;
+	
+}
+.betdiv {
+	width: 350px;
 	margin: auto;
+	top: 25%;
+	background-color: black;
+	opacity: 100;
+	position: relative;
+	border: 5px solid white;		
+	border-radius: 3px
 }

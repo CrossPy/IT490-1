@@ -11,10 +11,10 @@
 	        $request = array();
 	        $request['type'] = "placebet";
 	        $request['email'] = $_SESSION["username"];
-	        $request['id'] = $_POST["id"];
-		$request['team'] = $_POST['team'];
-		$resquest['opposition'] = $_POST['']
-		$request['amount'] = $_POST['amount'];
+	        $request['id'] = $_REQUEST["id"];
+			$request['team'] = $_REQUEST['team'];
+			$resquest['otherTeam'] = $_REQUEST['']
+			$request['amount'] = $_REQUEST['amount'];
         	$response = $client->send_request($request);
 
 	        return $response;

@@ -34,9 +34,9 @@
 			<h1>Login</h1>
 		</div>
 		<div class="form-group">
-			<form action="./scripts/login.php" method="post">	
+			<form action="scripts/login.php" method="post">
 				<label for="email">Email</label>
-				<input type="text" class="form-control" id="email" name="email" required/>
+				<input type="email" class="form-control" id="email" name="email" required/>
 
 				<label for="password">Password</label>
 				<input type="password" class="form-control" id="password" name="password" required/>

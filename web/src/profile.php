@@ -42,9 +42,9 @@
 			<li><a href="games.php">Games</a></li>
 		</ul>	
 		<ul class="nav navbar-nav navbar-right">
-			<li><li class="active"><a href="profile.php"><span class="glyphicon glyphicon-user"></span>
-			<?php if (isset($email)) {echo "<b>$email</b>";} else {echo "<b>Anonymous</b>";}?></a></li>
-			<li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+			<li class="active"><a href="profile.php"><span class="glyphicon glyphicon-user"></span>
+			<?php echo $email;?></a></li>
+			<li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 		</ul>
 	</div>
 	</nav>
