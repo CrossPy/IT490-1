@@ -27,22 +27,22 @@ function getPrepareGameScedule($array, $displayNum) {
 								<h3 class="modal-title">' . date("Y-m-d h:i:sa", strtotime($array[$i]['start'])) . '</h3>
 							</div>
 							<div class="modal-body">
-								<form>
+								<form id=fm_' . $array[$i]['id'] . '>
 									<input type="hidden" name="id" value="' . $array[$i]['id'] . '">
 									<div class="col-sm-6" style="text-align: center;">
 										<label for="team1">' . $array[$i]['team1'] . '</label><br/>
-										<input type="radio" name="team" value="' . $array[$i]['team1'] . '">
+										<input type="radio" name="team" value="' . $array[$i]['team1'] . '"/>
 									</div>
 									<div class="col-sm-6" style="text-align: center;">
 										<label for="team2">' .  $array[$i]['team2'] . '</label><br/>
-										<input type="radio" name="team" value="' .  $array[$i]['team2'] . '">
+										<input type="radio" name="team" value="' .  $array[$i]['team2'] . '" required/>
 									</div>
 									<div class="form-group">
 										<label for="amount">Amount</label>
-										<input type="number" id="amount" class="form-control" name="amount" step="0.01" min="0.01" placeholder="0.00" autocomplete="off"/>
+										<input type="number" id="amount" class="form-control" name="amount" step="0.01" min="0.01" placeholder="0.00" autocomplete="off" required/>
 									</div>
 									<div>
-										<button type=submit class="btn btn-primary btn-block">Place Bet</button>
+										<button type=submit id="bt_' . $array[$i]['id'] . '" class="btn btn-primary btn-block" onClick="placeBet(this.id)">Place Bet</button>
 									</div>											
 								</form>
 							</div>

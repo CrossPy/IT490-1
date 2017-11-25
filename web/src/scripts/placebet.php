@@ -6,21 +6,20 @@
 	
 	if (isset($_SESSION['username'])){
 
-	        $client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
+		$client = new rabbitMQClient("RabbitMQ.ini","BackendServer");
 
-	        $request = array();
-	        $request['type'] = "placebet";
-	        $request['email'] = $_SESSION["username"];
-	        $request['id'] = $_REQUEST["id"];
-			$request['team'] = $_REQUEST['team'];
-			$resquest['otherTeam'] = $_REQUEST['']
-			$request['amount'] = $_REQUEST['amount'];
-        	$response = $client->send_request($request);
+		$request = array();
+		$request['type'] = "placebet";
+		$request['email'] = $_SESSION["username"];
+		$request['id'] = $_REQUEST["id"];
+		$request['team'] = $_REQUEST['team'];
+		$request['amount'] = $_REQUEST['amount'];
+		$response = $client->send_request($request);
 
-	        return $response;
+		echo $response;
 	}
 	else {
-		return 2;
+		echo 3; // not logged in
 	}
 ?>
 

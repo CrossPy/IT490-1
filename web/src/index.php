@@ -21,22 +21,60 @@
 	<title>NJIT Bookies | Home</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
-		
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 	<link rel="stylesheet" href="style.css"/>
 	
 	<script>
+		"use strict";
 		$(document).ready(function(){		
 			$("button").click(function(){				
 				var id  = $(this).attr("id");
 				$('#div_' + id).css("display","block");
 			});			
 		});
-		function cancelBet(id){
-			document.getElementById("div_" + id).style.display = "none";
+		function placeBet(id) {
+			$("form").submit(function(e){
+				e.preventDefault();
+				var gameId = id.slice(3, id.length);
+				$("#fm_" + gameId).serialize();
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var response = this.responseText.trim();
+						console.log(typeof response + " "+ response);
+						console.log(response.length);
+						switch (response) {
+							case "0":
+								var alert = '<div class="alert alert-danger alert-dismissable">' +
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+								'<strong>Cannot Complete Request</strong> There is already a bet placed on opposing team.</div>';
+								break;
+							case "1":
+								var alert = '<div class="alert alert-success alert-dismissable">' +
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+								'<strong>Success!</strong> Bet placed.</div>';
+								break;
+							case "2":
+								var alert = '<div class="alert alert-warning alert-dismissable">' +
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+								'Not enough credits to place current bet.</div>';
+								break;
+							case "3": 
+								var alert = '<div class="alert alert-warning alert-dismissable">' +
+								'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+								'<strong>Not Logged in!</strong> Please log in to place bets.</div>';
+								break;
+						}
+						document.getElementById("response").innerHTML = alert;
+					}
+				};
+				xhttp.open("POST", "scripts/placebet.php", true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send($("#fm_" + gameId).serialize());
+				$('.modal.in').modal('hide');
+			});
 		}
 	</script>
 	</head>
@@ -69,8 +107,8 @@
 			</ul>
 		</div>		
 	</nav>
-
 	<div class="container">	
+	<div id="response">	</div>
 		<?php
 			require_once('path.inc');
         	require_once('get_host_info.inc');

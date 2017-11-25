@@ -58,7 +58,7 @@
 						<th>Sport</th>
 						<th>Game</th>
 						<th>Date</th>
-						<th>Bet Team</th>
+						<th>Pick</th>
 						<th>Amount</th>
 						<th>Transaction Date</th>
 						</tr></thead><tbody>';
