@@ -48,35 +48,67 @@
 	</div>
 	</nav>
 	<div class="container">
+		
 		<?php 
 			echo "<h1>Hello " . $response['firstName'] . " " . $response['lastName'] . "</h1><br/>
 					Current balance is $" . $response['balance'];			
 		?>
-		<div class="panel panel-default bk" >
-			<div class="panel-heading"><h4>Transaction History</h4></div>
-			<div class="panel-body">
+		
 			<?php
-				$transHistory = '
+				$currentBets = '<div class="panel panel-default bk" >
+							<div class="panel-heading"><h4>Pending Transactions</h4></div>
+							<div class="panel-body">
 							<div class="col-sm-12"><table class="table">
 							<thead><tr>
-							<th>Sport</th>
-							<th>Game</th>
-							<th>Game Date</th>
-							<th>Pick</th>
-							<th>Amount</th>
-							<th>Transaction Date</th>
+								<th>Sport</th>
+								<th>Game</th>
+								<th>Game Date</th>
+								<th>Pick</th>
+								<th>Amount</th>
+								<th>Transaction Date</th>
 							</tr></thead><tbody>';
+							
+				$transHistory = '<div class="panel panel-default bk" >
+							<div class="panel-heading"><h4>Transaction History</h4></div>
+							<div class="panel-body">
+							<div class="col-sm-12"><table class="table">
+							<thead><tr>
+								<th>Sport</th>
+								<th>Game</th>
+								<th>Game Date</th>
+								<th>Pick</th>
+								<th>Amount</th>
+								<th>Transaction Date</th>
+							</tr></thead><tbody>';
+				$pendingCount = 0;
+				$pastCount = 0;
 				for ($i = 0; $i < count($response['history']); $i++) {
-					$transHistory .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
-					. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
-					. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
-					. $response['history'][$i]['timestamp'] . '</td></tr>';
+					if (strtotime($response['history'][$i]['start']) > time()) {
+						$currentBets .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
+						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
+						. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'						
+						. $response['history'][$i]['timestamp'] . '</td></tr>';
+						$pendingCount += 1;						
+					}
+					else if (strtotime($response['history'][$i]['start']) < time()){
+						$transHistory .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
+						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
+						. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
+						. $response['history'][$i]['timestamp'] . '</td></tr>';
+						$pastCount += 1;
+					}
 				}
-				$transHistory .= "</tbody></table></div><fieldset>";
-				echo $transHistory;
+				if ($pendingCount == 0) {
+					$currentBets .= '<tr><td colspan="6">You do not have any pending bets.</td></tr>';
+				}
+				if ($pastCount == 0) {
+					$transHistory .= '<tr><td colspan="6">You do not have any past bets.</td></tr>';
+				}
+				$currentBets .= "</tbody></table></div></div></div>";
+				$transHistory .= "</tbody></table></div></div></div>";				
+				echo $currentBets;
+				echo $transHistory;				
 			?>
-			</div>
-		</div>
 	</div>
 </body>
 

@@ -49,7 +49,7 @@
 						case "0":
 							var alert = '<div class="alert alert-danger alert-dismissable">' +
 							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'<strong>Cannot Complete Request</strong> There is already a bet placed on the opposing team.</div>';
+							'<strong>Cannot complete request.</strong> There is already a bet placed on the opposing team.</div>';
 							break;
 						case "1":
 							var alert = '<div class="alert alert-success alert-dismissable">' +
@@ -129,7 +129,7 @@
 				if (!empty($games['nba'][0])) {
 				echo '<div class="col-sm-6">
 						<table class="table">              
-						<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
+						<thead><tr><th colspan="3"><h3>Basketball</h3></th></tr></thead>
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 						. $nba[0] . '</tbody></table><a href="games.php?sport=nba">View more</a></div>';
@@ -139,7 +139,7 @@
 				if (!empty($games['nfl'][0])) {
 					echo '<div class="col-sm-6">
 							<table class="table">              
-							<thead><tr><th colspan="3"><h1>Football</h1></th></tr></thead>
+							<thead><tr><th colspan="3"><h3>Football</h3></th></tr></thead>
 							<tbody>
 							<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 							. $nfl[0] . '</tbody></table><a href="games.php?sport=nfl">View more</a></div>';
@@ -149,7 +149,7 @@
 				if (!empty($games['mlb'][0])) {
 					echo '<div class="col-sm-12">
 						<table class="table">              
-						<thead><tr><th colspan="3"><h1>Baseball</h1></th></tr></thead>
+						<thead><tr><th colspan="3"><h3>Baseball</h3></th></tr></thead>
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 						. $mlb[0] . '</tbody></table><a href="games.php?sport=mlb">View more</a></div>';

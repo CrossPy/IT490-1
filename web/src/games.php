@@ -45,7 +45,7 @@
 						case "0":
 							var alert = '<div class="alert alert-danger alert-dismissable">' +
 							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'<strong>Cannot Complete Request</strong> There is already a bet placed on the opposing team.</div>';
+							'<strong>Cannot complete request.</strong> There is already a bet placed on the opposing team.</div>';
 							break;
 						case "1":
 							var alert = '<div class="alert alert-success alert-dismissable">' +
@@ -146,7 +146,7 @@
 				if ($nba[1] != null) {
 					echo '<div class="col-sm-'. $numDiv .'">
 						<table class="table">              
-						<thead><tr><th colspan="3"><h1>Basketball</h1></th></tr></thead>
+						<thead><tr><th colspan="3"><h3>Basketball</h3></th></tr></thead>
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 						. $nba[0] . '</tbody></table></div>';
@@ -156,7 +156,7 @@
 				if ($nfl[1] != null) {
 					echo '<div class="col-sm-'. $numDiv .'">
 						<table class="table">              
-						<thead><tr><th colspan="3"><h1>Football</h1></th></tr></thead>
+						<thead><tr><th colspan="3"><h3>Football</h3></th></tr></thead>
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 						. $nfl[0] . '</tbody></table></div>';
@@ -166,7 +166,7 @@
 				if ($mlb[1] != null) {
 					echo '<div class="col-sm-'. $numDiv .'">
 						<table class="table">              
-						<thead><tr><th colspan="3"><h1>Baseball</h1></th></tr></thead>
+						<thead><tr><th colspan="3"><h3>Baseball</h3></th></tr></thead>
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
 						. $mlb[0] . '</tbody></table></div>';
