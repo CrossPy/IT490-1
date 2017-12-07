@@ -3,38 +3,48 @@ env=$2
 
 pass="it490sucks"
 
-apiD="192.168.1.25"
-apiQ=""
-apiP=""
+apiD="192.168.1.104"
+apiQ="192.168.1.105"
+apiP="192.168.1.106"
 
-dbD=""
-dbQ=""
-dbP=""
+dbD="192.168.1.107"
+dbQ="192.168.1.108"
+dbP="192.168.1.109"
 
-mqD=""
-dbQ=""
-dbP=""
+webD="192.168.1.101"
+webQ="192.168.1.102"
+webP="192.168.1.103"
 
-webD="192.168.1.111"
-webQ=""
-webP=""
+apiLoc="/home/nick/IT490"
+dbLoc="/home/steve/IT490"
+webLoc=""
+
+apiUser="nick"
+dbUser="steve"
+webUser="omer"
 
 
 if [ $env="-d" ];
 then
-	sshpass -p "$pass" scp -r -oStrictHostKeyChecking=no "./releases/$v/IT490/api/" "nick@$apiD":/home/nick/
-	sshpass -p "$pass" scp -r -oStrictHostKeyChecking=no "./releases/$v/" "steve@$dbD":/home/steve/
-	sshpass -p "$pass" scp -r -oStrictHostKeyChecking=no "./releases/$v/IT490/web/src/" "god@$webD":/var/www/
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$webUser"@"$webD":"$webLoc"
 	exit 
 fi
 
 if [ $env="-q" ];
 then
-	sshpass -p "$pass" scp -r -oStrictHostKeyChecking=no "./releases/$v/IT490/api/" "nick@$apiQ":/home/nick/ 
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$webUser"@"$webD":"$webLoc"
+	exit
 fi
 
 if [ $env="-p" ];
 then
-	sshpass -p "$pass" scp -r -oStrictHostKeyChecking=no "./releases/$v/IT490/api/" "nick@$apiP":/home/nick/  
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
+	sudo sshpass -p '$pass' rsync -rV -e ssh "./releases/$v" "$webUser"@"$webD":"$webLoc"
+	exit
 fi 
 
