@@ -3,9 +3,8 @@
 V=$1
 echo $V
 mkdir "./releases/$V"
-
 git pull
-
-cp -r ../ ./releases/$V
+cd ..
+cp -R . ./vcs/releases/$V
 
 
