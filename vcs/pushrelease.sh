@@ -1,5 +1,6 @@
 v=$1
 env=$2
+echo $env
 
 pass="it490sucks"
 
