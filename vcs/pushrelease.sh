@@ -16,9 +16,9 @@ webD="192.168.1.101"
 webQ="192.168.1.102"
 webP="192.168.1.103"
 
-apiLoc="/home/nick/IT490"
-dbLoc="/home/steve/IT490"
-webLoc="/home/omer/IT490"
+apiLoc="/home/nick/IT490/"
+dbLoc="/home/steve/IT490/"
+webLoc="/home/omer/IT490/"
 
 apiUser="nick"
 dbUser="steve"
