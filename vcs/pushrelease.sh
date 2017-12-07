@@ -25,7 +25,7 @@ dbUser="steve"
 webUser="omer"
 
 
-if [ "$env" = "-d" ];
+if [ "$env" == "-d" ];
 then
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
@@ -33,7 +33,7 @@ then
 	exit 
 fi
 
-if [ "$env" = "-q" ];
+if [ "$env" == "-q" ];
 then
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbQ":"$dbLoc"
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiQ":"$apiLoc"
@@ -41,7 +41,7 @@ then
 	exit
 fi
 
-if [ "$env" = "-p" ];
+if [ "$env" == "-p" ];
 then
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbP":"$dbLoc"
 	sshpass -p "$pass" rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiP":"$apiLoc"
