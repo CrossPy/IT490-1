@@ -35,17 +35,17 @@ fi
 
 if [ "$env" = "-q" ];
 then
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$webUser"@"$webD":"$webLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbQ":"$dbLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiQ":"$apiLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$webUser"@"$webQ":"$webLoc"
 	exit
 fi
 
 if [ "$env" = "-p" ];
 then
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbD":"$dbLoc"
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiD":"$apiLoc"
-	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$webUser"@"$webD":"$webLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$dbUser"@"$dbP":"$dbLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$apiUser"@"$apiP":"$apiLoc"
+	sudo sshpass -p '$pass' rsync -r -e ssh "./releases/$v" "$webUser"@"$webP":"$webLoc"
 	exit
 fi 
 
