@@ -27,25 +27,25 @@ webUser="omer"
 
 if [ "$env" == "-d" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc" --exclude *.ini --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc" --delete-excluded
 	exit 
 fi
 
 if [ "$env" == "-q" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbQ":"$dbLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiQ":"$apiLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webQ":"$webLoc" --exclude *.ini --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbQ":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiQ":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webQ":"$webLoc" --delete-excluded
 	exit
 fi
 
 if [ "$env" == "-p" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbP":"$dbLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiP":"$apiLoc" --exclude *.ini --delete-excluded
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webP":"$webLoc" --exclude *.ini --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbP":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiP":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webP":"$webLoc" --delete-excluded
 	exit
 fi 
 
