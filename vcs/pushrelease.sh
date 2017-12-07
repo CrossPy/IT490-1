@@ -27,25 +27,25 @@ webUser="omer"
 
 if [ "$env" == "-d" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc"
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc" --delete-excluded
 	exit 
 fi
 
 if [ "$env" == "-q" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbQ":"$dbLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiQ":"$apiLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webQ":"$webLoc"
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbQ":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiQ":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webQ":"$webLoc" --delete-excluded
 	exit
 fi
 
 if [ "$env" == "-p" ];
 then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbP":"$dbLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiP":"$apiLoc"
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webP":"$webLoc"
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbP":"$dbLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiP":"$apiLoc" --delete-excluded
+	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webP":"$webLoc" --delete-excluded
 	exit
 fi 
 
