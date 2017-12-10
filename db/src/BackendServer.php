@@ -166,8 +166,8 @@
 
 		$con = mysqli_connect($configs['SQL_Server'], $configs['SQL_User'], $configs['SQL_Pass'], $configs['SQL_db']);
 		
-		if (isset($result['numOfGame'])){
-			$sql = "select id, sport, team1, team2, start from games where start > NOW() limit " . $result['numOfGame'];
+		if (isset($result['sport'])){
+			$sql = "select id, sport, team1, team2, start from games where start > NOW() and sport = '" . $result['sport'] . "'";
 		}
 		else {
 			$sql = "select id, sport, team1, team2, start from games where start > NOW()";
@@ -232,6 +232,11 @@
 			$con->query("insert into bets_table (user, game, team, amount) values('" . $result['email'] . "','" . $result['id'] 
 				. "','" . $result['team'] . "'," . $result['amount'] . ")");
 			$con->query("update users set balance = balance - " . $result['amount'] . " where email = '" . $result['email'] . "'");
+
+			$sqlLog = "insert into event_log values (NOW(), 'user " . $result['email'] . " placed " . $result['amount'] . " bet on " 
+			. $result['team'] . " for game id " . $result['id'] . "')";
+                        $loggin = $con->query($sqlLog);
+
 			printf($con->error);
 			return 1; //succesfully made a bet and current balance updated
 		}
