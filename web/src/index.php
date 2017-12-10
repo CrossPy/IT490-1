@@ -35,16 +35,15 @@
 		});			
 	});
 	function placeBet(id) {
-		$("form").submit(function(e){
-			e.preventDefault();
-			var gameId = id.slice(3, id.length);
-			$("#fm_" + gameId).serialize();
+		var gameId = id.slice(3, id.length);
+		$("#fm_" + gameId).submit(function(e){
+			e.preventDefault();			
+			console.log(gameId);
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					var response = this.responseText.trim();
 					console.log(typeof response + " "+ response);
-					console.log(response.length);
 					switch (response) {
 						case "0":
 							var alert = '<div class="alert alert-danger alert-dismissable">' +
@@ -74,6 +73,7 @@
 			xhttp.open("POST", "scripts/placebet.php", true);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhttp.send($("#fm_" + gameId).serialize());
+			document.getElementById("fm_" + gameId).reset();
 			$('.modal.in').modal('hide');
 		});
 	}
