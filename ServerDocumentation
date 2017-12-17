@@ -1,5 +1,7 @@
 # Server Documentation
 
+The following are a list of all our servers IP addresses and their purpose. 
+
 Production Servers:
 
 Eddie: 192.168.1.112
@@ -20,3 +22,5 @@ Eddie: 192.168.1.110
 Steve: 192.168.1.107
 Nick: 192.168.1.104
 Omer: 192.168.1.101
+_______________________________________________________________________________
+
