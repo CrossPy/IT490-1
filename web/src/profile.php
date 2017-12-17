@@ -22,6 +22,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>NJIT Bookies | Profile</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -62,7 +64,7 @@
 							<thead><tr>
 								<th>Sport</th>
 								<th>Game</th>
-								<th>Game Date</th>
+								<th>Game Date</th>								
 								<th>Pick</th>
 								<th>Amount</th>
 								<th>Transaction Date</th>
@@ -76,6 +78,7 @@
 								<th>Sport</th>
 								<th>Game</th>
 								<th>Game Date</th>
+								<th>Winner</th>
 								<th>Pick</th>
 								<th>Amount</th>
 								<th>Transaction Date</th>
@@ -83,18 +86,20 @@
 				$pendingCount = 0;
 				$pastCount = 0;
 				for ($i = 0; $i < count($response['history']); $i++) {
-					if (strtotime($response['history'][$i]['start']) > time()) {
+					if (empty($response['history'][$i]['win'])) {
+					//if (strtotime($response['history'][$i]['start']) > time()) {
 						$currentBets .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
 						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
 						. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'						
 						. $response['history'][$i]['timestamp'] . '</td></tr>';
 						$pendingCount += 1;						
 					}
-					else if (strtotime($response['history'][$i]['start']) < time()){
+					else {
+					//elseif (strtotime($response['history'][$i]['start']) < time()){
 						$transHistory .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
 						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
-						. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'
-						. $response['history'][$i]['timestamp'] . '</td></tr>';
+						. $response['history'][$i]['win'] . '</td><td>' . $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount']
+						. '</td><td>' . $response['history'][$i]['timestamp'] . '</td></tr>';
 						$pastCount += 1;
 					}
 				}
