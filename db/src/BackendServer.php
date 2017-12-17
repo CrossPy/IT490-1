@@ -96,8 +96,6 @@
 		else{
 			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', '$password', '$firstName', '$lastName', 100)";
 			if (mysqli_query ($con,$sql)){
-				//echo mysqli_error($con);
-				//inserted into database
 				$response = "$email";
 				$log = "$date $time Response Code 0: Email $email successfully added to database.\n";
 
@@ -124,7 +122,7 @@
 		$response['history'] = array();
 		
 		while ($row = $history->fetch_assoc()){
-			print_r($row);
+			//print_r($row);
 			array_push($response['history'], $row);
 		}		
 		return $response;
@@ -240,7 +238,7 @@
 		$check = $con->query("select * from bets_table where game = '". $result['id'] . "' and user = '" . $result['email'] 
 			. "' and team ='" . $opposing . "'");
 		if ($check->num_rows >= 1) {
-			return 0; //bet on opposing team exis			
+			return 0; //bet on opposing team exits	
 		}
 		else {
 			$con->query("insert into bets_table (user, game, team, amount) values('" . $result['email'] . "','" . $result['id'] 
