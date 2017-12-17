@@ -65,8 +65,7 @@ def getWeeklyData(sport, username, password):
     
 def insertScores(sport):
     scores = getDailyScores(sport, API_USER, API_PASS)
-    games = scores["scoreboard"]["gameScore"]
-    
+    games = scores["scoreboard"]["gameScore"]        
     for game in games:
         identifier = game["game"]["ID"]
         homeTeam = game["game"]["homeTeam"]["Name"]
@@ -107,19 +106,19 @@ def sendRequest(rabbitServer, rabbitQ, rabbitUser, rabbitPass, rabbitVHost, rabb
     
 def main():
     try:        
-        #insertData(getWeeklyData('nfl', API_USER, API_PASS), 'nfl')
+        insertData(getWeeklyData('nfl', API_USER, API_PASS), 'nfl')
         insertScores('nfl')
         print("\nNFL Done")
     except Exception as e:
         print(e)
     try:        
-        #insertData(getWeeklyData('nba', API_USER, API_PASS), 'nba')
+        insertData(getWeeklyData('nba', API_USER, API_PASS), 'nba')
         insertScores('nba')
         print("\nNBA Done")
     except Exception as e:
         print(e)
     try:        
-        #insertData(getWeeklyData('mlb', API_USER, API_PASS), 'mlb')
+        insertData(getWeeklyData('mlb', API_USER, API_PASS), 'mlb')
         insertScores('mlb')
         print("\nMLB Done")
     except Exception as e:
