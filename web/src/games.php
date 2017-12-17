@@ -16,64 +16,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="bookies.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>		
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="style.css"/>
-	<script>
-	"use strict";
-	$(document).ready(function(){		
-		$("button").click(function(){				
-			var id  = $(this).attr("id");
-			$('#div_' + id).css("display","block");
-		});			
-	});
-	function placeBet(id) {
-		$("form").submit(function(e){
-			e.preventDefault();
-			var gameId = id.slice(3, id.length);
-			$("#fm_" + gameId).serialize();
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					var response = this.responseText.trim();
-					console.log(typeof response + " "+ response);
-					console.log(response.length);
-					switch (response) {
-						case "0":
-							var alert = '<div class="alert alert-danger alert-dismissable">' +
-							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'<strong>Cannot complete request.</strong> There is already a bet placed on the opposing team.</div>';
-							break;
-						case "1":
-							var alert = '<div class="alert alert-success alert-dismissable">' +
-							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'<strong>Success!</strong> Bet placed.</div>';
-							break;
-						case "2":
-							var alert = '<div class="alert alert-warning alert-dismissable">' +
-							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'Not enough credits to place current bet.</div>';
-							break;
-						case "3": 
-							var alert = '<div class="alert alert-warning alert-dismissable">' +
-							'<a href="#" class="close" data-dismiss="modal" aria-label="close">&times;</a>' +
-							'<strong>Not Logged in!</strong> Please log in to place bets.</div>';
-							break;
-					}
-					document.getElementById("responseBody").innerHTML = alert;
-					$('#response').modal('show');
-				}
-			};
-			xhttp.open("POST", "scripts/placebet.php", true);
-			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhttp.send($("#fm_" + gameId).serialize());
-			$('.modal.in').modal('hide');
-		});
-	}
-</script>
+	<link rel="stylesheet" href="style.css"/>	
 </head>
 
 <body>
@@ -88,17 +39,14 @@
 		</ul>	
 		<ul class="nav navbar-nav navbar-right">
 			 
-				<?php					
-				if (isset($_SESSION['username']))
-				{
-					echo '<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>' . $_SESSION['username'] . '</a></li>	
+			<?php					
+				if (isset($_SESSION['username'])){
+					echo '<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> ' . $_SESSION['username'] . '</a></li>	
 						<li><a href="./scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a> </li>';
 				}
-				else
-				{
+				else{
 					echo '<li> <a href="register.php">Register</a></li>
 						<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
-
 				}
 			?>				
 		</ul>
@@ -125,9 +73,9 @@
 				require_once('scripts/functions.php');
 				
 				$count = 0;					
-				$nba = getPrepareGameSchedule($games['nba'], 20);
-				$nfl = getPrepareGameSchedule($games['nfl'], 20);
-				$mlb = getPrepareGameSchedule($games['mlb'], 20);
+				$nba = getPrepareGameSchedule($games['nba'], 50);
+				$nfl = getPrepareGameSchedule($games['nfl'], 50);
+				$mlb = getPrepareGameSchedule($games['mlb'], 50);
 				
 				if ($nba[1] != null) {
 					$count += 1;
