@@ -53,8 +53,8 @@
 		$count = mysqli_num_rows($result);
 		$array = mysqli_fetch_assoc($result);
 		$pass = $array["password"];
-		if ($count == 1){
-			if (password_verify($password, $pass)){
+		if($count == 1){
+			if(password_verify($password, $pass)){
 				$response = "0";
 				$sqlLog = "insert into event_log values (NOW(), 'Response Code 0: Email $email sucessfully logged in.')";
 				$logging = $result=mysqli_query($con, $sqlLog);
@@ -72,10 +72,10 @@
 	}
 
 	function doRegister($email, $password, $firstName, $lastName) {
+		global $configs;
 		$register = fopen("register.txt", "a") ;
 		$date = date("Y-m-d");
-		$time = date("h:i:sa");
-		global $configs;
+		$time = date("h:i:sa");		
 		$con = mysqli_connect($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 		$password = password_hash($password, PASSWORD_DEFAULT);
 		$sql="select * from users where email='$email'";
@@ -84,7 +84,7 @@
 		$count=mysqli_num_rows($result);
 
 
-		if ($count >= 1){
+		if($count >= 1){
 			//email already registered
 			$response = "1";
 			$log = "$date $time Response Code 1: Email $email already registered.\n";
@@ -95,7 +95,7 @@
 		}
 		else{
 			$sql="INSERT INTO users (email, password, firstName, lastName, balance) VALUES('$email', '$password', '$firstName', '$lastName', 100)";
-			if (mysqli_query ($con,$sql)){
+			if(mysqli_query ($con,$sql)){
 				$response = "$email";
 				$log = "$date $time Response Code 0: Email $email successfully added to database.\n";
 
@@ -142,34 +142,70 @@
 		
 		$con = new mysqli($configs['SQL_Server'],$configs['SQL_User'],$configs['SQL_Pass'],$configs['SQL_db']);
 
-		$sql="select id, win from games where id='$id'";
+		$sql="select win from games where id='$id'";
 		$query = $con->query($sql);
 		$count = mysqli_num_rows($query);
-		if ($count < 1) {
+		if($count < 1) {
 			$datetime = date("Y-m-d H:i:s", strtotime("$time $date"));
 			$sql = "INSERT INTO games (id, sport, team1, team2, start) VALUES($id, '$sport', '$homeTeam', '$awayTeam', '$datetime')";
 			$insert = $con->query($sql);
-			if (!$insert->error) {
+			if(!$insert->error) {
 			   printf("Error message: %s\n", $con->error);
 			}
 			
 			$sqlLog = "INSERT INTO event_log VALUES (NOW(), 'Game ID $id inserted into database')";
 			$loggin = $con->query($sqlLog);
-			if (!$loggin->error) {
+			if(!$loggin->error) {
 			   printf("Error message: %s\n", $con->error);
 			}
 		}
 		elseif(empty(mysqli_fetch_assoc($query)['win']) && $homeScore != $awayScore) {
-			if ($homeScore > $awayScore) {
+			if($homeScore > $awayScore) {
 				$winner = $homeTeam;
 			}
 			else {
 				$winner = $awayTeam;
 			}
-			$update = $con->query("UPDATE games SET score1 = $homeScore, score2 = $awayScore, win = '$winner' where id='$id'");
-			if (!$update->error) {
+			
+			$update = $con->query("UPDATE games SET score1 = $homeScore, score2 = $awayScore, win = '$winner' where id=$id");
+			if(!$update) {
 			   printf("Error message: %s\n", $con->error);
 			}
+			$payout = $con->query("SELECT user, team, SUM(amount) as amount from bets_table where game=$id GROUP BY user, team");
+			if(!$payout) {
+			   printf("Error message: %s\n", $con->error);
+			}
+			else {
+				$payees = array();
+				$total["total"] = 0;
+				while ($row = $payout->fetch_assoc()) {
+					$user = $row['user'];
+					$team = $row['team'];
+					$payees["$user"] = array($row['team'], $row['amount']);
+					$total["total"] += $row['amount'];
+					if (isset($total["$team"])) {
+						$total["$team"] += $row['amount'];
+					}
+					else {
+						$total["$team"] = $row['amount'];
+					}
+				}
+				print_r($total);
+				foreach ($payees as $person=>$info) {
+					if($winner == $info[0]){
+						$payAmt = number_format(($info[1]/$total["$team"])* $total["total"], 2);
+						print $person;
+						if(!$con->query("UPDATE users SET balance = balance + $payAmt where email = '$person'")) {
+						   printf("Error message: %s\n", $con->error);
+						}
+						$sqlLog = "INSERT INTO event_log VALUES (NOW(), 'User $person received \$$payAmt from game $id')";
+						$loggin = $con->query($sqlLog);
+						if(!$loggin->error) {
+						   printf("Error message: %s\n", $con->error);
+						}
+					}
+				}				
+			}			
 		}
 		$con->close();
 	}
@@ -179,7 +215,7 @@
 
 		$con = mysqli_connect($configs['SQL_Server'], $configs['SQL_User'], $configs['SQL_Pass'], $configs['SQL_db']);
 		
-		if (isset($result['sport'])){
+		if(isset($result['sport'])){
 			$sql = "select id, sport, team1, team2, start from games where start > NOW() and sport = '" . $result['sport'] . "'";
 		}
 		else {
@@ -237,7 +273,7 @@
 		
 		$check = $con->query("select * from bets_table where game = '". $result['id'] . "' and user = '" . $result['email'] 
 			. "' and team ='" . $opposing . "'");
-		if ($check->num_rows >= 1) {
+		if($check->num_rows >= 1) {
 			return 0; //bet on opposing team exits	
 		}
 		else {
