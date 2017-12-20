@@ -20,11 +20,11 @@
 	<meta charset="utf-8">		
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>NJIT Bookies | Home</title>
-	<script src="bookies.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="bookies.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 	<link rel="stylesheet" href="style.css"/>
 </head>
@@ -76,34 +76,35 @@
 				
 				$nba = getPrepareGameSchedule($games['nba'], 5);
 				if (!empty($games['nba'][0])) {
-				echo '<div class="col-sm-6">
-						<table class="table">              
-						<thead><tr><th colspan="3"><h3>Basketball</h3></th></tr></thead>
+				echo '<div class="panel panel-default bk">            
+						<div class="panel-heading">NBA - Basketball</div>					
+						<table class="table">  
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
-						. $nba[0] . '</tbody></table><a href="games.php?sport=nba">View more</a></div>';
+						. $nba[0] . '</tbody></table><a href="games.php?sport=nba"><button type="button" class="btn btn-link btn-block">View more</button></a></div>';
 				}
 
 				$nfl = getPrepareGameSchedule($games['nfl'], 5);
 				if (!empty($games['nfl'][0])) {
-					echo '<div class="col-sm-6">
-							<table class="table">              
-							<thead><tr><th colspan="3"><h3>Football</h3></th></tr></thead>
-							<tbody>
-							<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
-							. $nfl[0] . '</tbody></table><a href="games.php?sport=nfl">View more</a></div>';
+					echo '<div class="panel panel-default bk">   
+						<div class="panel-heading">NFL - Football</div>
+						<table class="table">
+						<tbody>
+						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
+						. $nfl[0] . '</tbody></table><a href="games.php?sport=nfl"><button type="button" class="btn btn-link btn-block">View more</button></a></div>';
 				}
 
 				$mlb = getPrepareGameSchedule($games['mlb'], 5);
 				if (!empty($games['mlb'][0])) {
-					echo '<div class="col-sm-12">
-						<table class="table">              
-						<thead><tr><th colspan="3"><h3>Baseball</h3></th></tr></thead>
+					echo '<div class="panel panel-default bk">
+						<div class="panel-heading">MLB - Baseball</div>
+						<table class="table">  
 						<tbody>
 						<tr><td>Upcoming Games</td><td>Date Time</td></tr>'
-						. $mlb[0] . '</tbody></table><a href="games.php?sport=mlb">View more</a></div>';
+						. $mlb[0] . '</tbody></table><a href="games.php?sport=mlb"><button type="button" class="btn btn-link btn-block">View more</button></a></div>';
 				}			
 				
+				/*
 				if ($nba[1] != null) {
 					echo $nba[1];
 				}
@@ -113,6 +114,7 @@
 				if ($mlb[1] != null) {
 					echo $mlb[1];
 				}
+				*/
 			?>
 		</div>
 	</div>

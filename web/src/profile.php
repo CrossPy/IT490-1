@@ -87,7 +87,6 @@
 				$pastCount = 0;
 				for ($i = 0; $i < count($response['history']); $i++) {
 					if (empty($response['history'][$i]['win'])) {
-					//if (strtotime($response['history'][$i]['start']) > time()) {
 						$currentBets .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
 						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
 						. $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount'] . '</td><td>'						
@@ -95,7 +94,6 @@
 						$pendingCount += 1;						
 					}
 					else {
-					//elseif (strtotime($response['history'][$i]['start']) < time()){
 						$transHistory .= '<tr><td>' . strtoupper($response['history'][$i]['sport']) . '</td><td>' . $response['history'][$i]['team1'] 
 						. ' vs ' .  $response['history'][$i]['team2'] . '</td><td>' . $response['history'][$i]['start'] . '</td><td>' 
 						. $response['history'][$i]['win'] . '</td><td>' . $response['history'][$i]['team'] . '</td><td>' . $response['history'][$i]['amount']

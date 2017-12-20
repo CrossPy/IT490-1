@@ -13,9 +13,8 @@ function getPrepareGameSchedule($array, $displayNum) {
 	else {                                
 		for ($i = 0; $i < count($array) && $i < $displayNum; $i++){
 			$result .= '<tr><td>' . $array[$i]['team1'] . ' vs ' .  $array[$i]['team2'] . '</td><td>' . 
-			date("Y-m-d h:i:sa", strtotime($array[$i]['start'])) . '</td><td><button type="button" 
-			class="btn btn-primary btn-block" data-toggle="modal" data-target="#' . $array[$i]['id'] . 
-			'" >Place Bet</button></td></tr>';
+			date("Y-m-d h:i:sa", strtotime($array[$i]['start'])) . '</td><td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#' 
+				. $array[$i]['id'] . '" >Place Bet</button></td></tr>';
 			
 			$modal .= '<div id="' .$array[$i]['id'] . '" class="modal fade" role="dialog">
 						<div class="modal-dialog">
@@ -24,7 +23,7 @@ function getPrepareGameSchedule($array, $displayNum) {
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<h1 class="modal-title">Football</h1>
 								<h2 class="modal-title">' . $array[$i]['team1'] . ' vs ' .  $array[$i]['team2'] . '</h2>
-								<h3 class="modal-title">' . date("Y-m-d h:i:sa", strtotime($array[$i]['start'])) . '</h3>
+								<h3 class="modal-title">' . date("Y-m-d h:i:sa", strtotime($array[$i]['start'])) . '</h3> 
 							</div>
 							<div class="modal-body">
 								<form id=fm_' . $array[$i]['id'] . '>

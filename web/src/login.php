@@ -36,10 +36,10 @@
 		<div class="form-group">
 			<form action="scripts/login.php" method="post">
 				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" name="email" required/>
+				<input type="email" class="form-control" id="email" name="email" required />
 
 				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" name="password" required/>
+				<input type="password" class="form-control" id="password" name="password" required />
 				<br/>
 				<button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-lock"></span> Sign in</button>
 			</form>
