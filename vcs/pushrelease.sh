@@ -25,13 +25,13 @@ dbUser="steve"
 webUser="omer"
 
 
-if [ "$env" == "-d" ];
-then
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc" --exclude *.ini
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc" --exclude *.ini
-	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc" --exclude *.ini
-	exit 
-fi
+#if [ "$env" == "-d" ];
+#then
+#	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$dbUser"@"$dbD":"$dbLoc" --exclude *.ini
+#	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$apiUser"@"$apiD":"$apiLoc" --exclude *.ini
+#	sshpass -p "$pass" rsync -r -e ssh "./releases/$v/" "$webUser"@"$webD":"$webLoc" --exclude *.ini
+#	exit 
+#fi
 
 if [ "$env" == "-q" ];
 then
