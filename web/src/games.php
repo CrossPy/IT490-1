@@ -43,8 +43,28 @@
 	</div>		
 </nav>
 <div class="container">
+	<div class="form-group form-inline">
+	<select class="form-control" id="sel">
+		<?php
+			$nba = '';
+			$nfl = '';
+			$mlb = '';
+			$all = '';
+			switch ($_REQUEST['sport']) {
+				case 'nba': $nba = 'selected'; break;
+				case 'nfl': $nfl = 'selected'; break;
+				case 'mlb': $mlb = 'selected'; break;
+				default:
+					$all = 	'selected';
+			}
+			echo '<option value="all" '. $all . '>All</option>
+				<option value="nba" '. $nba . '>NBA</option>
+				<option value="nfl" '. $nfl . '>NFL</option>
+				<option value="mlb" '. $mlb . '>MLB</option>'
+		?>
+	</select>
 	<input class="form-control" id="search" type="text" placeholder="Search Games..">
-	<br/>
+	</div>
 	<?php
 		require_once('path.inc');
 		require_once('get_host_info.inc');
@@ -53,9 +73,9 @@
 
 		$request = array();
 		$request['type'] = "games";
-		if (isset($_REQUEST['sport'])) {
+		/*if (isset($_REQUEST['sport'])) {
 			$request['sport'] = $_REQUEST['sport'];
-		}
+		}*/
 		$response = $client->send_request($request);
 		$games = json_decode($response, true);
 		
@@ -67,7 +87,7 @@
 		$mlb = getPrepareGameSchedule($games['mlb'], 50);	
 		
 		if ($nba[1] != null) {
-			echo '<div class="panel panel-default bk">            
+			echo '<div class="panel panel-default bk" id="nbaPanel">            
 				<div class="panel-heading">Basketball</div>					
 				<table class="table">  
 				<tbody id="nbaTable">
@@ -77,7 +97,7 @@
 			echo $nba[1];
 		}
 		if ($nfl[1] != null) {
-			echo '<div class="panel panel-default bk">   
+			echo '<div class="panel panel-default bk" id="nflPanel">   
 				<div class="panel-heading">Football</div>
 				<table class="table">           
 				<tbody id="nflTable">
@@ -87,7 +107,7 @@
 			echo $nfl[1];
 		}
 		if ($mlb[1] != null) {
-			echo '<div class="panel panel-default bk">
+			echo '<div class="panel panel-default bk" id="mlbPanel">
 				<div class="panel-heading"><Baseball</div>
 				<table class="table">           
 				<tbody id="mlbTable">
