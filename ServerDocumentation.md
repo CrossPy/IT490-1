@@ -24,4 +24,4 @@ Dev Servers:
 - Omer: 192.168.1.101
 _______________________________________________________________________________
 
-![Screenshot](Server Documentation.jpg)
+![Image of Server Documentation](https://github.com/OANJIT/IT490/blob/master/Server%20Documentation.jpg)
