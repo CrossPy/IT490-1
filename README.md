@@ -32,6 +32,6 @@ We would like to cordially thank the developers of MySportsFeeds for providing u
 
 # Contributors
 - Eddie Fiorentine: https://github.com/edman80
-- Omer Amin: https://github.com/OANJIT
+- Omer Amin: https://github.com/OANJIT     :smile:
 - Steve St. Edwards: https://github.com/sms46
-- Nick Rocha: no github :-(
+- Nick Rocha: https://github.com/nr322
